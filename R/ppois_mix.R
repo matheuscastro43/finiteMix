@@ -5,7 +5,7 @@ ppois_mix <- function(q, pi, lambda, lower.tail = TRUE){
       aux = 0
       if(q == Inf){ aux = 1
       }else{
-        if(q > 0){
+        if(q >= 0){
           for(j in 1:g){aux = aux + pi[j]*ppois(q,lambda=lambda[j])}
         }
       }
