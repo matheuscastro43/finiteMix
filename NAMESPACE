@@ -1,0 +1,4 @@
+import(graphics)
+import(stats)
+import(grDevices)
+exportPattern("^[[:alpha:]]+")
