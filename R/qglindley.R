@@ -3,12 +3,12 @@ qglindley <- function (p, alpha, beta, gamma, lower.tail = TRUE, log.p = FALSE){
     if (min(c(alpha, beta, gamma)) > 0){
       if(log.p){
         p <- exp(p)
-      }
+        }
       if (!lower.tail) {
         p = 1 - p
       }
       if (p < 0 || p > 1) {
-        message("A probability must be in (0, 1) interval.")
+        warning("The probability must be in (0, 1) interval.")
         return(NaN)
       }
       else {
@@ -37,7 +37,7 @@ qglindley <- function (p, alpha, beta, gamma, lower.tail = TRUE, log.p = FALSE){
   }
   else {
     j = function(p) {
-      qglindley(p, alpha, beta, gamma, lower.tail)
+      qglindley(p, alpha, beta, gamma, lower.tail, log.p)
     }
     return(sapply(p, j))
   }
