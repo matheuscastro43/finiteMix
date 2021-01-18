@@ -4,7 +4,7 @@
 
 \title{ Quantile Function of a Generalized Lindley Mixture}
 
-\description{ Gives the quantile function value of a univariate Gemeralized Lindley Mixture.}
+\description{ Gives the quantile function value of a univariate Generalized Lindley Mixture.}
 
 \usage{qglindley_mix(p, pi, alpha, beta, gamma, lower.tail = TRUE, log.p = FALSE)}
 
