@@ -4,17 +4,17 @@
 
 \title{ Random Generator of a Exponential Mixture}
 
-\description{ Generates random samples of a univariate Exponential mixture.}
+\description{ Generates random samples of a univariate Exponential Mixture.}
 
-\usage{rexp_mix(n, pi, rate, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
+\usage{ rexp_mix(n, pi, rate, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
          col.empirical = "navy", ...)}
 
 \arguments{
   \item{n}{ number of observations.}
   \item{pi}{ vector of mixture weights.}
   \item{rate}{ vector of rate parameters.}
-  \item{plot.it}{ logical, TRUE to plot the histogram with estimated distribution curve.}
-  \item{empirical}{ logical, TRUE to add the empirical curve ("Kernel Density Estimation") in the plot.}
+  \item{plot.it}{ logical; if TRUE (default), plot the histogram with estimated distribution curve.}
+  \item{empirical}{ logical; if TRUE, add the empirical curve ("Kernel Density Estimation") in the plot.}
   \item{col.pop}{ a colour to be used in the curve of population density.}
   \item{col.empirical}{ a colour to be used in the curve of empirical density.}
   \item{...}{ further arguments and graphical parameters passed to \link[graphics]{hist}.}

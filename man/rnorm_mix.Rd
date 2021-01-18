@@ -4,7 +4,7 @@
 
 \title{ Random Generator of a Normal Mixture}
 
-\description{ Generates random samples of a univariate Normal mixture.}
+\description{ Generates random samples of a univariate Normal Mixture.}
 
 \usage{ rnorm_mix(n, pi, mean, sd, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
            col.empirical = "navy", ...)}
@@ -13,9 +13,9 @@
   \item{n}{ number of observations.}
   \item{pi}{ vector of mixture weights.}
   \item{mean}{ vector of mixture means.}
-  \item{sd}{ vector of mixture standard desviations.}
-  \item{plot.it}{ logical, TRUE to plot the histogram with estimated distribution curve.}
-  \item{empirical}{ logical, TRUE to add the empirical curve ("Kernel Density Estimation") in the plot.}
+  \item{sd}{ vector of mixture standard deviations.}
+  \item{plot.it}{ logical; if TRUE (default), plot the histogram with estimated distribution curve.}
+  \item{empirical}{ logical; if TRUE, add the empirical curve ("Kernel Density Estimation") in the plot.}
   \item{col.pop}{ a colour to be used in the curve of population density.}
   \item{col.empirical}{ a colour to be used in the curve of empirical density.}
   \item{...}{ further arguments and graphical parameters passed to \link[graphics]{hist}.}

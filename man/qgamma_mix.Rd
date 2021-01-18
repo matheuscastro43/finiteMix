@@ -32,5 +32,5 @@
 qgamma_mix(0.59, pi = c(0.6, 0.4), alpha = c(1, 2), beta = c(1, 5))
 
 ## A vector
-qgamma_mix(c(0.25, 0.50, 0.75), pi = c(0.6, 0.4), alpha = c(1, 2), beta = c(1, 5), lower.tail = FALSE)
+qgamma_mix(c(0.25, 0.50, 0.75), pi = c(0.6, 0.4), alpha = c(1, 2), beta=c(1, 5))
 }

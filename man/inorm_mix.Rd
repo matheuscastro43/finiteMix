@@ -12,7 +12,7 @@ inorm_mix(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
 }
 
 \arguments{
-\item{data}{ vector containing the sample, or list obtained with \link[mixGM]{rnorm_mix}.}
+\item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rnorm_mix}.}
 \item{g}{ number of components in the mixture.}
 \item{criteria}{ the stop criteria to be used, could be "dif.psi" to calculate differences on
 parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
