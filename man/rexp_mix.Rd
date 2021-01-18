@@ -7,7 +7,7 @@
 \description{ Generates random samples of a univariate Exponential Mixture.}
 
 \usage{ rexp_mix(n, pi, rate, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
-         col.empirical = "navy", ...)}
+          col.empirical = "navy", ...)}
 
 \arguments{
   \item{n}{ number of observations.}

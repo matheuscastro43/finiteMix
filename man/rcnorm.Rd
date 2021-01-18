@@ -1,18 +1,19 @@
-\name{Random Poisson Mixture}
+\name{Random Contaminated Normal Distribution}
 
-\alias{rpois_mix}
+\alias{rnorm_mix}
 
-\title{ Random Generator of a Poisson Mixture}
+\title{ Random Generator of a Contaminated Normal Distribution}
 
-\description{ Generates random samples of a univariate Poisson Mixture.}
+\description{ Generates random samples of a univariate Contaminated Normal Distribution.}
 
-\usage{ rpois_mix(n, pi, lambda, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
-           col.empirical = "navy", ...)}
+\usage{ rcnorm(n, pi, mean, sd, gamma, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
+        col.empirical = "navy", ...)}
 
 \arguments{
   \item{n}{ number of observations.}
   \item{pi}{ vector of mixture weights.}
-  \item{lambda}{ vector of (non-negative) parameters.}
+  \item{mean}{ value of mixture mean.}
+  \item{sd}{ vector of mixture standard deviations.}
   \item{plot.it}{ logical; if TRUE (default), plot the histogram with estimated distribution curve.}
   \item{empirical}{ logical; if TRUE, add the empirical curve ("Kernel Density Estimation") in the plot.}
   \item{col.pop}{ a colour to be used in the curve of population density.}
@@ -31,7 +32,7 @@
 
 \examples{
 ## Generate a sample.
-data = rpois_mix(n = 1000, pi = c(0.6, 0.4), lambda = c(10, 15))
+data = rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2))
 
 ## Sample vector.
 data$sample
@@ -41,16 +42,16 @@ data$classification
 data$plot
 
 ## Not plotting the graphic.
-rpois_mix(n = 1000, pi = c(0.6, 0.4), lambda = c(10, 25), plot.it = FALSE)
+rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2), plot.it = FALSE)
 
 ## Adding the empirical curve to the graphic.
-rpois_mix(n = 1000, pi = c(0.6, 0.4), lambda = c(10, 25), plot.it = TRUE,
+rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2), plot.it = TRUE,
           empirical = TRUE)
 
 ## Changing the color of the curves.
-rpois_mix(n = 1000, pi = c(0.6, 0.4), lambda = c(10, 25), plot.it = TRUE,
+rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2), plot.it = TRUE,
           empirical = TRUE, col.pop = "blue", col.empirical = "green")
 
 ## Using "...".
-rpois_mix(n = 1000, pi = c(0.6, 0.4), lambda = c(10, 25), breaks = 300)
+rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2), breaks = 300)
 }
