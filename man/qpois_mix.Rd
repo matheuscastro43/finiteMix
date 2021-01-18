@@ -1,4 +1,4 @@
-\name{Quantiles Poisson Mixture}
+\name{ Quantile Poisson Mixture}
 
 \alias{qpois_mix}
 
@@ -6,13 +6,14 @@
 
 \description{ Gives the quantile function value of a univariate Poisson mixture.}
 
-\usage{qpois_mix(p, pi, lambda, lower.tail = TRUE)}
+\usage{qpois_mix(p, pi, lambda, lower.tail = TRUE. log.p = FALSE)}
 
 \arguments{
   \item{p}{ value or vector to apply on the quantile function.}
   \item{pi}{ vector of mixture weights.}
   \item{lambda}{ vector of (non-negative) parameters.}
   \item{lower.tail}{logical; if TRUE (default). probabilites are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.}
+  \item{log.p}{logical; if FALSE (default), \eqn{probabilities} are expected in \eqn{p}, otherwise \eqn{log[probabilities]} are expected.}
 }
 
 %\details{}

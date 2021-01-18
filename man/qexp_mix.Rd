@@ -1,4 +1,4 @@
-\name{Quantiles Exponential Mixture}
+\name{ Quantile Exponential Mixture}
 
 \alias{qexp_mix}
 
@@ -6,15 +6,14 @@
 
 \description{ Gives the quantile function value of a univariate Exponential mixture.}
 
-\usage{
-qexp_mix(p, pi, rate, lower.tail = TRUE)
-}
+\usage{qexp_mix(p, pi, rate, lower.tail = TRUE, log.p = FALSE)}
 
 \arguments{
   \item{p}{ value or vector to apply on the quantile function.}
   \item{pi}{ vector of mixture weights.}
   \item{rate}{ vector of rate parameters.}
   \item{lower.tail}{logical; if TRUE (default). probabilites are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.}
+  \item{log.p}{logical; if FALSE (default), \eqn{probabilities} are expected in \eqn{p}, otherwise \eqn{log[probabilities]} are expected.}
 }
 
 %\details{}
