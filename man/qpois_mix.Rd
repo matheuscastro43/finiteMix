@@ -4,9 +4,9 @@
 
 \title{ Quantile Function of a Poisson Mixture}
 
-\description{ Gives the quantile function value of a univariate Poisson mixture.}
+\description{ Gives the quantile function value of a univariate Poisson Mixture.}
 
-\usage{qpois_mix(p, pi, lambda, lower.tail = TRUE. log.p = FALSE)}
+\usage{qpois_mix(p, pi, lambda, lower.tail = TRUE, log.p = FALSE)}
 
 \arguments{
   \item{p}{ value or vector to apply on the quantile function.}
