@@ -1,10 +1,10 @@
-\name{ Quantile Contamined Normal Mixture}
+\name{ Quantile Contaminated Normal Distribution}
 
 \alias{qcnorm}
 
-\title{ Quantile Function of a Contamined Normal Mixture}
+\title{ Quantile Function of a Contaminated Normal Distribution}
 
-\description{ Gives the quantile function value of a univariate Contamined Normal Mixture.}
+\description{ Gives the quantile function value of a univariate Contaminated Normal Distribution.}
 
 \usage{qcnorm(p, pi, mean, sd, gamma, lower.tail = TRUE, log.p = FALSE)}
 

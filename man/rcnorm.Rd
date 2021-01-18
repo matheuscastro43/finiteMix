@@ -13,7 +13,8 @@
   \item{n}{ number of observations.}
   \item{pi}{ vector of mixture weights.}
   \item{mean}{ value of mixture mean.}
-  \item{sd}{ vector of mixture standard deviations.}
+  \item{sd}{ value of standard deviation parameter.}
+  \item{gamma}{ value of gamma parameter.}
   \item{plot.it}{ logical; if TRUE (default), plot the histogram with estimated distribution curve.}
   \item{empirical}{ logical; if TRUE, add the empirical curve ("Kernel Density Estimation") in the plot.}
   \item{col.pop}{ a colour to be used in the curve of population density.}
@@ -32,26 +33,24 @@
 
 \examples{
 ## Generate a sample.
-data = rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2))
+data = rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3)
 
 ## Sample vector.
 data$sample
-## The classification of each observation.
-data$classification
 ## The histogram of the sample with population density curve.
 data$plot
 
 ## Not plotting the graphic.
-rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2), plot.it = FALSE)
+rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3, plot.it = FALSE)
 
 ## Adding the empirical curve to the graphic.
-rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2), plot.it = TRUE,
+rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3, plot.it = TRUE,
           empirical = TRUE)
 
 ## Changing the color of the curves.
-rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2), plot.it = TRUE,
+rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3, plot.it = TRUE,
           empirical = TRUE, col.pop = "blue", col.empirical = "green")
 
 ## Using "...".
-rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2), breaks = 300)
+rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3, breaks = 300)
 }
