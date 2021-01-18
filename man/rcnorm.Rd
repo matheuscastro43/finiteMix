@@ -1,6 +1,6 @@
 \name{Random Contaminated Normal Distribution}
 
-\alias{rnorm_mix}
+\alias{rnorm}
 
 \title{ Random Generator of a Contaminated Normal Distribution}
 
