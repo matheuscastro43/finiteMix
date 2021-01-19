@@ -1,13 +1,13 @@
-pglindley <- function(q, alpha, beta, gamma, lower.tail = TRUE){
+pglindley <- function(q, alpha, beta, gamma, lower.tail = TRUE, log.p = FALSE){
   if(length(q) == 1){
     if(min(c(alpha, beta, gamma)) > 0){
       pi = c(1/(1 + beta*gamma), beta*gamma/(1 + beta*gamma))
-      aux = pgamma_mix(q, pi, c(alpha, alpha + 1), rep(beta, 2))
-      if(lower.tail){return(aux)
-      }else{return(1 - aux)}
+      return(pgamma_mix(q, pi, c(alpha, alpha + 1), rep(beta, 2), lower.tail, log.p))
+    }else{
+      stop("The parametric space must be respected.")
     }
   }else{
-    h <- function(q){pglindley(q, alpha, beta, gamma, lower.tail)}
+    h = function(q){pglindley(q, alpha, beta, gamma, lower.tail, log.p)}
     return(sapply(q, h))
   }
 }
