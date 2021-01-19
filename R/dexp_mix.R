@@ -11,8 +11,7 @@ dexp_mix <- function(x, pi, rate, log = FALSE){
       }else{
         return(log(aux))
       }
-    }else{
-      stop("The parametric space must be respected.")
+    }else{stop("The parametric space must be respected.")
     }
   }else{
     h = function(x){dexp_mix(x, pi, rate, log)}

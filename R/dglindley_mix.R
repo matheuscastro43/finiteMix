@@ -1,14 +1,22 @@
-dglindley_mix <- function(x, pi, alpha, beta, gamma){
+dglindley_mix <- function(x, pi, alpha, beta, gamma, log = FALSE){
   if(length(x) == 1){
-    g <- length(pi)
-    if(sum(pi) == 1 && min(pi) > 0 && length(alpha) == g && length(beta) == g &&
-       length(gamma) == g && min(c(alpha, beta, gamma)) > 0){
+    g = length(pi)
+    if(sum(pi) == 1 && min(c(pi, alpha, beta, gamma)) > 0 
+       && length(alpha) == g && length(beta) == g && length(gamma) == g){
       aux = 0
-      for(j in 1:g){aux = aux + pi[j]*dglindley(x, alpha[j], beta[j], gamma[j])}
-      return(aux)
+      if(x >= 0){
+        for(j in 1:g){aux = aux + pi[j]*dglindley(x, alpha[j], beta[j], gamma[j])}
+      }
+      if(!log){
+        return(aux)
+      }else{
+        return(log(aux))
+      }
+    }else{
+      stop("The parametric space must be respected.")
     }
   }else{
-    h <- function(x){dglindley_mix(x, pi, alpha, beta, gamma)}
+    h = function(x){dglindley_mix(x, pi, alpha, beta, gamma, log)}
     return(sapply(x, h))
   }
 }

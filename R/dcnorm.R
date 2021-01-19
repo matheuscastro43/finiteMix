@@ -8,8 +8,7 @@ dcnorm <- function(x, pi, mean, sd, gamma, log = FALSE){
       }else{
         return(log(aux))
       }
-    }
-    else{
+    }else{
       stop("The parametric space must be respected.")
     }
   }else{
