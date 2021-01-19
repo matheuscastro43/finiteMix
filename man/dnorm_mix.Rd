@@ -4,9 +4,7 @@
 
 \title{ Normal Mixture Density}
 
-\description{
-Gives the density value of a univariate Normal mixture.
-}
+\description{ Gives the density value of a univariate Normal Mixture.}
 
 \usage{dnorm_mix(x, pi, mean, sd)}
 
