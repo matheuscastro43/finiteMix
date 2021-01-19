@@ -1,26 +1,28 @@
-\name{Density Exponential Mixture}
+\name{Density Generalized Lindley Mixture}
 
-\alias{dexp_mix}
+\alias{dglindley_mix}
 
-\title{ Exponential Mixture Density}
+\title{ Generalized Lindley Mixture Density}
 
 \description{
-Gives the density value of a univariate Exponential Mixture.
+Gives the density value of a univariate Generalized Lindley Mixture.
 }
 
-\usage{dexp_mix(x, pi, rate, log = FALSE)}
+\usage{dglindley_mix(x, pi, alpha, beta, gamma, log = FALSE)}
 
 \arguments{
   \item{x}{ value or vector of values, to apply in the mixture probability density function.}
   \item{pi}{ vector of mixture weights.}
-  \item{rate}{ vector of rate parameters.}
+  \item{alpha}{ vector of parameters.}
+  \item{beta}{ vector of parameters.}
+  \item{gamma}{ vector of parameters.}
   \item{log}{ logical; if TRUE, \eqn{probabilities} p are given as \eqn{log(p)}.}
 }
 
 \details{
 Each component of the mixture has density
-\deqn{f_j(x) = \lambda_j exp(-\lambda_j * x)}
-where \eqn{\lambda_j} is the rate paramter of the jth component. j = 1, 2, ..., g.
+\deqn{f_j(x) = (x^(\alpha_j - 1) * (\alpha_j + \gamma_j*x) * exp(-x/\beta_j))/(\beta_j^(\alpha_j * (\beta_j*\gamma_j + 1) * Gamma(\alpha_j + 1)))}
+where \eqn{\alpha_j}, \eqn{\beta_j} and \eqn{\gamma_j} are the parameters of the jth component. j = 1, 2, ..., g.
 }
 
 %\value{
@@ -47,14 +49,15 @@ where \eqn{\lambda_j} is the rate paramter of the jth component. j = 1, 2, ..., 
 %}
 
 \examples{
-f <- function(x){dexp_mix(x, pi = c(0.1, 0.9), rate = c(1, 1/30))}
+f <- function(x){dglindley_mix(x, pi = c(0.1, 0.9), alpha = c(1, 3), 
+                               beta = c(5, 2), gamma = c(1, 2))}
 ## Plot using graphics package
 require(graphics)
-curve(f, 0, 40)
+curve(f, 0, 25)
 
 require(ggplot2)
 ## Plot using ggplot2 package
-ggplot(data.frame(x=c(0, 40)), aes(x)) +
+ggplot(data.frame(x=c(0, 25)), aes(x)) +
   stat_function(fun=f, size = 1L, colour = "#0c4c8a") +
   theme_minimal()
 

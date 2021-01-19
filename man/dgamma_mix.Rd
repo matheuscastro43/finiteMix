@@ -1,26 +1,27 @@
-\name{Density Poisson Mixture}
+\name{Density Gamma Mixture}
 
-\alias{dpois_mix}
+\alias{dgamma_mix}
 
-\title{ Poisson Mixture Density}
+\title{ Gamma Mixture Density}
 
 \description{
-Gives the density value of a univariate Poisson Mixture.
+Gives the density value of a univariate Gamma Mixture.
 }
 
-\usage{dpois_mix(x, pi, lambda, log = FALSE)}
+\usage{dgamma_mix(x, pi, alpha, beta, log = FALSE)}
 
 \arguments{
   \item{x}{ value or vector of values, to apply in the mixture probability density function.}
   \item{pi}{ vector of mixture weights.}
-  \item{lambda}{vector os parameters (means).}
+  \item{alpha}{ shape parameters.}
+  \item{beta}{ scale parameters.}
   \item{log}{ logical; if TRUE, \eqn{probabilities} p are given as \eqn{log(p)}.}
 }
 
 \details{
 Each component of the mixture has density
-\deqn{f_j(x) = (exp(- \lambda_j) * \lambda_j^(x))) / (x!)}
-where \eqn{\lambda_j} is the mean and the variance of the jth component. j = 1, 2, ..., g.
+\deqn{f_j(x) = 1/(\beta_j^(\alpha_j) Gamma(\alpha_j)) x^(\alpha_j-1) e^-(x/\beta_j)}
+where \eqn{\alpha_j} is the shape parameter of the jth component and \eqn{\beta_j} is the scale parameter of the jth component. j = 1, 2, ..., g.
 }
 
 %\value{
@@ -35,10 +36,7 @@ where \eqn{\lambda_j} is the mean and the variance of the jth component. j = 1, 
 %% ~put references to the literature/web site here ~
 %}
 
-%\author{
-%%  ~~who you are~~
-%}
-
+\author{CASTRO, M. O.; MONTALVO, G. S. A.}
 %\note{
 %%  ~~further notes~~
 %}
@@ -50,21 +48,17 @@ where \eqn{\lambda_j} is the mean and the variance of the jth component. j = 1, 
 %}
 
 \examples{
-f <- function(x){dpois_mix(x, c(0.5, 0.5), c(3, 8))}
+f <- function(x){dgamma_mix(x, pi = c(0.1, 0.9), alpha = c(1, 3), beta = c(5, 2))}
 ## Plot using graphics package
 require(graphics)
-plot.function(f, 0, 10, type = "h")
+curve(f, 0, 25)
 
 require(ggplot2)
 ## Plot using ggplot2 package
-x <- seq(0, 20, 1)
-aux <- data.frame(x, y = f(x))
-
-ggplot(aux, aes(x=x)) +
-  geom_point( aes(y=y) ) +
-  geom_linerange(aes(ymax=y), ymin=0) +
+ggplot(data.frame(x=c(0, 25)), aes(x)) +
+  stat_function(fun=f, size = 1L, colour = "#0c4c8a") +
   theme_minimal()
 
-## Sum
-sum(f(0:10000))
+## Integrate
+integrate(f, 0, "Inf")$value
 }

@@ -1,26 +1,26 @@
-\name{Density Poisson Mixture}
+\name{Density Beta Rectangular Distribution}
 
-\alias{dpois_mix}
+\alias{dbetar}
 
-\title{ Poisson Mixture Density}
+\title{ Beta Rectangular Distribution Density}
 
 \description{
-Gives the density value of a univariate Poisson Mixture.
+Gives the density value of a univariate Beta Rectangular Distribution.
 }
 
-\usage{dpois_mix(x, pi, lambda, log = FALSE)}
+\usage{dbetar(x, pi, mu, phi, log = FALSE)}
 
 \arguments{
   \item{x}{ value or vector of values, to apply in the mixture probability density function.}
   \item{pi}{ vector of mixture weights.}
-  \item{lambda}{vector os parameters (means).}
+  \item{mu}{ value of parameter.}
+  \item{phi}{ value of parameter.}
   \item{log}{ logical; if TRUE, \eqn{probabilities} p are given as \eqn{log(p)}.}
 }
 
 \details{
-Each component of the mixture has density
-\deqn{f_j(x) = (exp(- \lambda_j) * \lambda_j^(x))) / (x!)}
-where \eqn{\lambda_j} is the mean and the variance of the jth component. j = 1, 2, ..., g.
+The mixture has density 
+\deqn{f(x) = \pi_1 + \pi_2 * (x^(mu*phi - 1) * (1 - x)^((1-mu)*phi)).}
 }
 
 %\value{
@@ -50,21 +50,17 @@ where \eqn{\lambda_j} is the mean and the variance of the jth component. j = 1, 
 %}
 
 \examples{
-f <- function(x){dpois_mix(x, c(0.5, 0.5), c(3, 8))}
+f <- function(x){dbetar(x, pi = c(0.5, 0.5), mu = 0.4, phi = 3)}
 ## Plot using graphics package
 require(graphics)
-plot.function(f, 0, 10, type = "h")
+curve(f, 0, 1)
 
 require(ggplot2)
 ## Plot using ggplot2 package
-x <- seq(0, 20, 1)
-aux <- data.frame(x, y = f(x))
-
-ggplot(aux, aes(x=x)) +
-  geom_point( aes(y=y) ) +
-  geom_linerange(aes(ymax=y), ymin=0) +
+ggplot(data.frame(x=c(0, 1)), aes(x)) +
+  stat_function(fun=f, size = 1L, colour = "#0c4c8a") +
   theme_minimal()
 
-## Sum
-sum(f(0:10000))
+## Integrate
+integrate(f, 0, 1)$value
 }

@@ -1,26 +1,28 @@
-\name{Density Poisson Mixture}
+\name{Density Contaminated Normal Distribution}
 
-\alias{dpois_mix}
+\alias{dcnorm}
 
-\title{ Poisson Mixture Density}
+\title{ Contaminated Normal Distribution Density}
 
 \description{
-Gives the density value of a univariate Poisson Mixture.
+Gives the density value of a univariate Contaminated Normal Distribution.
 }
 
-\usage{dpois_mix(x, pi, lambda, log = FALSE)}
+\usage{dcnorm(x, pi, mean, sd, gamma, log = FALSE)}
 
 \arguments{
   \item{x}{ value or vector of values, to apply in the mixture probability density function.}
   \item{pi}{ vector of mixture weights.}
-  \item{lambda}{vector os parameters (means).}
+  \item{mean}{ value of mixture mean.}
+  \item{sd}{ value of parameter.}
+  \item{gamma}{ value of parameter.}
   \item{log}{ logical; if TRUE, \eqn{probabilities} p are given as \eqn{log(p)}.}
 }
 
 \details{
-Each component of the mixture has density
-\deqn{f_j(x) = (exp(- \lambda_j) * \lambda_j^(x))) / (x!)}
-where \eqn{\lambda_j} is the mean and the variance of the jth component. j = 1, 2, ..., g.
+The mixture has density 
+\deqn{f(x) = \pi_1 * N(mean, sd/sqrt(gamma)) + \pi_2 * N(mean, sd)}
+where \eqn{N(mean, sd)} is the density function of a Normal Distribution.
 }
 
 %\value{
@@ -50,21 +52,17 @@ where \eqn{\lambda_j} is the mean and the variance of the jth component. j = 1, 
 %}
 
 \examples{
-f <- function(x){dpois_mix(x, c(0.5, 0.5), c(3, 8))}
+f <- function(x){dcnorm(x, pi = c(0.7, 0.3), mean = 10, sd = 1, gamma = 3)}
 ## Plot using graphics package
 require(graphics)
-plot.function(f, 0, 10, type = "h")
+curve(f, 7, 13)
 
 require(ggplot2)
 ## Plot using ggplot2 package
-x <- seq(0, 20, 1)
-aux <- data.frame(x, y = f(x))
-
-ggplot(aux, aes(x=x)) +
-  geom_point( aes(y=y) ) +
-  geom_linerange(aes(ymax=y), ymin=0) +
+ggplot(data.frame(x=c(7, 13)), aes(x)) +
+  stat_function(fun=f, size = 1L, colour = "#0c4c8a") +
   theme_minimal()
 
-## Sum
-sum(f(0:10000))
+## Integrate
+integrate(f, 0, Inf)$value
 }

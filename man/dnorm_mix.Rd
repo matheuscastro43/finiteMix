@@ -6,13 +6,14 @@
 
 \description{ Gives the density value of a univariate Normal Mixture.}
 
-\usage{dnorm_mix(x, pi, mean, sd)}
+\usage{dnorm_mix(x, pi, mean, sd, log = FALSE)}
 
 \arguments{
   \item{x}{ value or vector of values, to apply in the mixture probability density function.}
   \item{pi}{ vector of mixture weights.}
   \item{mean}{ vector of mixture means.}
-  \item{sd}{ vector of mixture standard desviations.}
+  \item{sd}{ vector of mixture standard deviations.}
+  \item{log}{ logical; if TRUE, \eqn{probabilities} p are given as \eqn{log(p)}.}
 }
 
 \details{
