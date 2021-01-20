@@ -5,7 +5,7 @@
 \title{ Distribution Function of a Normal Mixture}
 
 \description{
-Gives the distribution function value of a univariate Normal mixture.
+Gives the distribution function value of a univariate Normal Mixture.
 }
 
 \usage{
@@ -45,5 +45,4 @@ pnorm_mix(12, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2), lower.tail = FAL
 ## A vector
 pnorm_mix(c(-100, 10.96684, 100), pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2),
           lower.tail = FALSE)
-
 }

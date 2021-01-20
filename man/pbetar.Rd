@@ -1,19 +1,20 @@
-\name{Probabilities Exponential Mixture}
+\name{Probabilities Beta Rectangular Distribution}
 
-\alias{pexp_mix}
+\alias{pbetar}
 
-\title{ Distribution Function of a Exponential Mixture}
+\title{ Distribution Function of a Beta Rectangular Distribution}
 
 \description{
-Gives the distribution function value of a univariate Exponential Mixture.
+Gives the distribution function value of a univariate Beta Rectangular Distribution.
 }
 
-\usage{pexp_mix(q, pi, rate, lower.tail = TRUE, log.p = FALSE)}
+\usage{pbetar(q, pi, mu, phi, lower.tail = TRUE, log.p = FALSE)}
 
 \arguments{
   \item{q}{ value or vector to apply on the distribution function.}
   \item{pi}{ vector of mixture weights.}
-  \item{rate}{ vector of rate parameters.}
+  \item{mu}{ value of parameter.}
+  \item{phi}{ value of parameter.}
   \item{lower.tail}{logical; if TRUE (default). probabilites are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.}
   \item{log.p}{logical; if FALSE (default), \eqn{probabilities} are expected in \eqn{p}, otherwise \eqn{log[probabilities]} are expected.}
 }
@@ -34,17 +35,17 @@ Gives the distribution function value of a univariate Exponential Mixture.
 ## Distribution Function
 
 ## A value
-pexp_mix(2, pi = c(0.1, 0.9), rate = c(1, 1/30))
+pbetar(0.3, pi = c(0.1, 0.9), mu = 0.7, phi = 3)
 
 ## A vector
-pexp_mix(c(0, 17.6336, Inf), pi = c(0.1, 0.9), rate = c(1, 1/30))
+pbetar(c(0, 0.6, 1), pi = c(0.1, 0.9), mu = 0.7, phi = 3)
 
 
 ## Survival Function
 
 ## A value
-pexp_mix(2, pi = c(0.8, 0.2), rate = c(1, 1/30), lower.tail = FALSE)
+pbetar(0.7, pi = c(0.8, 0.2), mu = 0.7, phi = 3, lower.tail = FALSE)
 
 ## A vector
-pexp_mix(c(0, 10, 15), pi = c(0.1, 0.9), rate = c(1, 1/30), lower.tail = FALSE)
+pbetar(c(0, 0.10, 0.15), pi = c(0.1, 0.9), mu = 0.7, phi = 3, lower.tail = FALSE)
 }

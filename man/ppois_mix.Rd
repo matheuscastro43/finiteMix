@@ -5,7 +5,7 @@
 \title{ Distribution Function of a Poisson Mixture}
 
 \description{
-Gives the distribution function value of a univariate Poisson mixture.
+Gives the distribution function value of a univariate Poisson Mixture.
 }
 
 \usage{
