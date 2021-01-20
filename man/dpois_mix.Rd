@@ -1,17 +1,17 @@
-\name{Density Poisson Mixture}
+\name{Probability Mass Poisson Mixture}
 
 \alias{dpois_mix}
 
-\title{ Poisson Mixture Density}
+\title{ Poisson Mixture Probability Mass}
 
 \description{
-Gives the density value of a univariate Poisson Mixture.
+Gives the probability mass value of a univariate Poisson Mixture.
 }
 
 \usage{dpois_mix(x, pi, lambda, log = FALSE)}
 
 \arguments{
-  \item{x}{ value or vector of values, to apply in the mixture probability density function.}
+  \item{x}{ value or vector of values, to apply in the mixture probability mass function.}
   \item{pi}{ vector of mixture weights.}
   \item{lambda}{vector os parameters (means).}
   \item{log}{ logical; if TRUE, \eqn{probabilities} p are given as \eqn{log(p)}.}

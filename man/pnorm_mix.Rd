@@ -9,7 +9,7 @@ Gives the distribution function value of a univariate Normal mixture.
 }
 
 \usage{
-pnorm_mix(q, pi, mean, sd, lower.tail = TRUE)
+pnorm_mix(q, pi, mean, sd, lower.tail = TRUE, log.p = FALSE)
 }
 
 \arguments{
@@ -18,6 +18,7 @@ pnorm_mix(q, pi, mean, sd, lower.tail = TRUE)
   \item{mean}{ vector of mixture means.}
   \item{sd}{ vector of mixture standard desviations.}
   \item{lower.tail}{logical; if TRUE (default). probabilites are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.}
+  \item{log.p}{logical; if FALSE (default), \eqn{probabilities} are expected in \eqn{p}, otherwise \eqn{log[probabilities]} are expected.}
 }
 
 %\details{}

@@ -9,7 +9,7 @@ Gives the distribution function value of a univariate Poisson mixture.
 }
 
 \usage{
-ppois_mix(q, pi, lambda, lower.tail = TRUE)
+ppois_mix(q, pi, lambda, lower.tail = TRUE, log.p = FALSE)
 }
 
 \arguments{
@@ -17,6 +17,7 @@ ppois_mix(q, pi, lambda, lower.tail = TRUE)
   \item{pi}{ vector of mixture weights.}
   \item{lambda}{ vector of (non-negative) parameters.}
   \item{lower.tail}{logical; if TRUE (default). probabilites are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.}
+  \item{log.p}{logical; if FALSE (default), \eqn{probabilities} are expected in \eqn{p}, otherwise \eqn{log[probabilities]} are expected.}
 }
 
 \author{CASTRO, M. O.; MONTALVO, G. S. A.}

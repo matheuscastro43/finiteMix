@@ -8,13 +8,14 @@
 Gives the distribution function value of a univariate Exponential mixture.
 }
 
-\usage{pexp_mix(q, pi, rate, lower.tail = TRUE)}
+\usage{pexp_mix(q, pi, rate, lower.tail = TRUE, log.p = FALSE)}
 
 \arguments{
   \item{q}{ value or vector to apply on the distribution function.}
   \item{pi}{ vector of mixture weights.}
   \item{rate}{ vector of rate parameters.}
   \item{lower.tail}{logical; if TRUE (default). probabilites are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.}
+  \item{log.p}{logical; if FALSE (default), \eqn{probabilities} are expected in \eqn{p}, otherwise \eqn{log[probabilities]} are expected.}
 }
 
 %\details{}
