@@ -12,7 +12,6 @@ rbetar = function(n, pi, mu, phi, plot.it = TRUE, empirical = FALSE, col.pop = "
     
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-      print(modal)
       modal = max(modal, max(density(sample)$y))
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
