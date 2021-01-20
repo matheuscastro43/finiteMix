@@ -1,10 +1,8 @@
 rglindley_mix = function(n, pi, alpha, beta, gamma, plot.it = TRUE, empirical = FALSE, 
                          col.pop = "red3", col.empirical = "navy", ...){
   g <- length(pi)
-  if(n == floor(n) && n > 0 && length(alpha) == g && length(beta) == g &&
-     length(gamma) == g && sum(pi) == 1 && min(c(pi, alpha, beta, gamma)) > 0 &&
-     is.logical(plot.it) && is.logical(empirical)
-  ){
+  if(n == floor(n) && sum(pi) == 1 && min(c(pi, alpha, beta, gamma, n)) > 0 
+     && length(alpha) == g && length(beta) == g && length(gamma) == g){
     
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
@@ -48,7 +46,5 @@ rglindley_mix = function(n, pi, alpha, beta, gamma, plot.it = TRUE, empirical = 
       names(output) = c("sample", "g", "pi", "alpha", "beta", "gamma", "classification")
     }
     return(output)}
-  else{
-    stop("Error.")
-  }
+  else stop("The parametric space must be respected.")
 }

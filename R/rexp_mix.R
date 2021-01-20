@@ -1,9 +1,7 @@
 rexp_mix <- function(n, pi, rate, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                      col.empirical = "navy", ...){
   g <- length(pi)
-  if(n == floor(n) && n > 0 && g == floor(g) && g >1 && length(pi) == g && sum(pi) == 1
-     && min(pi) > 0 && length(rate) == g && min(rate) > 0 && is.logical(plot.it) &&
-     is.logical(empirical)){
+  if(n == floor(n) && sum(pi) == 1 && min(c(pi, rate, n)) > 0 && length(rate) == g){
 
     z <- rmultinom(n, 1, pi)
     aux <- rowSums(z)
@@ -43,7 +41,5 @@ rexp_mix <- function(n, pi, rate, plot.it = TRUE, empirical = FALSE, col.pop = "
       names(output) = c("sample", "g", "pi", "lambda", "classification")
     }
     return(output)}
-  else{
-    stop("Error.")
-  }
+  else stop("The parametric space must be respected.")
 }

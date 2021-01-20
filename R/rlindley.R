@@ -1,7 +1,6 @@
 rlindley = function(n, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                      col.empirical = "navy", ...){
-  if(n == floor(n) && n > 0 && min(beta) > 0 && is.logical(plot.it) && is.logical(empirical)
-  ){
+  if(n == floor(n) && min(c(beta, n)) > 0){
     pi = c(1/(1 + beta), beta/(1 + beta))
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
@@ -39,7 +38,5 @@ rlindley = function(n, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3"
       names(output) = c("sample", "beta")
     }
     return(output)}
-  else{
-    stop("Error.")
-  }
+  else stop("The parametric space must be respected.")
 }

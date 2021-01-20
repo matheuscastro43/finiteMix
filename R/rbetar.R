@@ -1,26 +1,26 @@
-rgamma_mix = function(n, pi, alpha, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
-                     col.empirical = "navy", ...){
-  g <- length(pi)
-  if(n == floor(n) && sum(pi) == 1 && min(c(pi, alpha, beta, n)) > 0 && length(alpha) == g && 
-     length(beta) == g){
+rbetar = function(n, pi, mu, phi, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
+                  col.empirical = "navy", ...){
+  if(n == floor(n) && sum(pi) == 1 && min(c(pi, mu, phi, n)) > 0 && length(mu) == 1 && length(phi) == 1 &&
+     length(pi) == 2 && mu < 1){
     
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
-    modal <- max(dgamma_mix(mogamma(alpha, beta), pi, alpha, beta))
+    modal = dbetar(optimize(function(x) dbetar(x, pi, mu, phi), interval= c(0,1), maximum = T)$maximum, pi, mu, phi)
     
-    sample = NULL
-    for(j in 1:g){
-      sample = c(sample, rgamma(aux[j], alpha[j], scale = beta[j]))
-    }
+    sample = c(runif(aux[1]), 
+               rbeta(aux[2], mu*phi, (1-mu)*phi + 1))
+    
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
+      print(modal)
       modal = max(modal, max(density(sample)$y))
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",
+           xlim = c(0, 1),
            ylim = c(0, modal),
            if(any(names(list(...)) == "breaks") == FALSE){breaks = d.breaks}, ...)
-      pop = function(x){dgamma_mix(x, pi, alpha, beta)}
+      pop = function(x){dbetar(x, pi, mu, phi)}
       curve(pop, col = col.pop, lwd = 3, add = T)
       if(empirical){
         lines(density(sample),col = col.empirical,lwd = 3)
@@ -33,16 +33,14 @@ rgamma_mix = function(n, pi, alpha, beta, plot.it = TRUE, empirical = FALSE, col
       }
       p <- recordPlot()
     }
-    ord <- order(sample)
-    sample <- cbind(sample, rep(1:g, aux))
-    sample <- sample[ord,]
+    sample <- sort(sample)
     if(plot.it){
-      output = list(sample[,1], g, pi, alpha, beta, sample[,2], p)
-      names(output) = c("sample", "g", "pi", "alpha", "beta", "classification", "plot")
+      output = list(sample, pi, mu, phi, p)
+      names(output) = c("sample", "pi", "mu", "phi", "plot")
     }
     else{
-      output = list(sample[,1], g, pi, alpha, beta, sample[,2])
-      names(output) = c("sample", "g", "pi", "alpha", "beta", "classification")
+      output = list(sample, pi, mu, phi)
+      names(output) = c("sample", "pi", "mu", "phi")
     }
     return(output)}
   else stop("The parametric space must be respected.")

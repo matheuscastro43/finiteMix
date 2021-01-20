@@ -1,13 +1,11 @@
 rcnorm = function(n, pi, mean, sd, gamma, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                      col.empirical = "navy", ...){
-  if(n == floor(n) && n > 0 && length(mean) == 1 && sum(pi) == 1 &&
-     min(c(pi, sd, gamma)) > 0 && length(sd) == 1 && length(pi) == 2 &&
-     is.logical(plot.it) && is.logical(empirical)
-  ){
+  if(n == floor(n) && sum(pi) == 1 && length(pi) == 2 && length(mean) == 1 && length(sd) == 1 &&
+     length(gamma) == 1 && min(c(pi, sd, gamma, n)) > 0){
     
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
-    modal <- max(dcnorm(mean, pi, mean, sd, gamma))
+    modal = max(dcnorm(mean, pi, mean, sd, gamma))
     
       sample = c(rnorm(aux[1], mean, sd = sd/sqrt(gamma)),
                  rnorm(aux[2], mean, sd = sd))
@@ -43,7 +41,5 @@ rcnorm = function(n, pi, mean, sd, gamma, plot.it = TRUE, empirical = FALSE, col
       names(output) = c("sample", "pi", "mu", "sigma", "gamma")
     }
     return(output)}
-  else{
-    stop("Error.")
-  }
+  else stop("The parametric space must be respected.")
 }

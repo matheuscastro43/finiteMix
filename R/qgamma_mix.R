@@ -30,8 +30,7 @@ qgamma_mix <- function(p, pi, alpha, beta, lower.tail = TRUE, log.p = FALSE){
           }
         }
       }
-    }
-    else stop("The parametric space must be respected.")
+    }else stop("The parametric space must be respected.")
     
   }else{
     j <- function(p){qgamma_mix(p, pi, alpha, beta, lower.tail, log.p)}

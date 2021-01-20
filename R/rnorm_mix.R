@@ -1,9 +1,7 @@
 rnorm_mix = function(n, pi, mean, sd, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                      col.empirical = "navy", ...){
   g <- length(pi)
-  if(n == floor(n) && n > 0 && length(mean) == g && sum(pi) == 1 && min(pi) > 0 &&
-     length(sd) == g && min(sd) > 0 && is.logical(plot.it) && is.logical(empirical)
-  ){
+  if(n == floor(n) && sum(pi) == 1 && min(c(pi, sd, n)) > 0 && length(mean) == g && length(sd) == g){
 
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
@@ -45,8 +43,6 @@ rnorm_mix = function(n, pi, mean, sd, plot.it = TRUE, empirical = FALSE, col.pop
       output = list(sample[,1], g, pi, mean, sd, sample[,2])
       names(output) = c("sample", "g", "pi", "mu", "sigma", "classification")
     }
-    return(output)}
-  else{
-    stop("Error.")
-  }
+    return(output)
+    }else stop("The parametric space must be respected.")
 }
