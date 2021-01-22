@@ -1,6 +1,6 @@
 plindley <- function(q, beta, lower.tail = TRUE, log.p = FALSE){
   if(length(q) == 1){
-    if(beta > 0){
+    if(beta > 0 && length(beta) == 1){
       if(q != Inf){
         aux = (1 - (beta + q + 1)/(beta + 1)*exp(-q/beta))*(q >= 0)
       }else{

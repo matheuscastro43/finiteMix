@@ -1,6 +1,7 @@
 qglindley <- function (p, alpha, beta, gamma, lower.tail = TRUE, log.p = FALSE){
   if (length(p) == 1) {
-    if (min(c(alpha, beta, gamma)) > 0){
+    if (min(c(alpha, beta, gamma)) > 0 && length(alpha) == 1 && 
+        length(beta) == 1 && length(gamma) == 1){
       if(log.p){
         p <- exp(p)
         }

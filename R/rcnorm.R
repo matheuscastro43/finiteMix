@@ -12,7 +12,8 @@ rcnorm = function(n, pi, mean, sd, gamma, plot.it = TRUE, empirical = FALSE, col
       
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-      modal = max(modal, max(density(sample)$y))
+      modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
+        breaks = d.breaks}, ...)$density)))
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",

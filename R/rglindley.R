@@ -1,6 +1,7 @@
 rglindley = function(n, alpha, beta, gamma, plot.it = TRUE, empirical = FALSE, 
                      col.pop = "red3", col.empirical = "navy", ...){
-  if(n == floor(n) && min(c(alpha, beta, gamma, n)) > 0){
+  if(n == floor(n) && min(c(alpha, beta, gamma, n)) > 0 && length(alpha) == 1 && 
+     length(beta) == 1 && length(gamma) == 1){
     pi = c(1/(1 + beta*gamma), 1 - 1/(1 + beta*gamma))
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)

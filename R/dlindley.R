@@ -1,6 +1,6 @@
 dlindley <- function(x, beta, log = FALSE){
   if(length(x) == 1){
-    if(beta > 0){
+    if(beta > 0 && length(beta) == 1){
       aux = 0
       if(x >= 0){
         aux = (x + 1)/(beta*(beta + 1))*exp(-x/beta)

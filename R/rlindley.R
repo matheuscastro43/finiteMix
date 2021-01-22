@@ -1,6 +1,6 @@
 rlindley = function(n, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                      col.empirical = "navy", ...){
-  if(n == floor(n) && min(c(beta, n)) > 0){
+  if(n == floor(n) && min(c(beta, n)) > 0 && length(beta) == 1){
     pi = c(1/(1 + beta), 1 - 1/(1 + beta))
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
@@ -9,8 +9,8 @@ rlindley = function(n, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3"
     sample = rgamma_mix(n, pi, c(1, 2), rep(beta, 2), plot.it = FALSE)$sample
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-        modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
-          breaks = d.breaks}, ...)$density)))
+      modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
+        breaks = d.breaks}, ...)$density)))
       hist(sample, freq = F, border = "gray48",
            main = "Sampling distribution of X", xlab = "x",
            ylab = "Density",

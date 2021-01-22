@@ -1,6 +1,6 @@
 qlindley <- function(p, beta, lower.tail = TRUE, log.p = FALSE){
   if(length(p) == 1){
-    if(beta > 0){
+    if(beta > 0 && length(beta) == 1){
       if(log.p){
         p = exp(p)
       }

@@ -1,7 +1,7 @@
 qlindley_mix <- function(p, pi, beta, lower.tail = TRUE, log.p = FALSE){
   if(length(p) == 1){
     g <- length(pi)
-    if(sum(pi) == 1 && min(pi) > 0 && length(beta) == g && min(beta) > 0){
+    if(sum(pi) == 1 && min(c(pi, beta)) > 0 && length(beta) == g){
       if(log.p){
         p = exp(p)
       }

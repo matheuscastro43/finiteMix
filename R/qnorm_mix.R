@@ -1,8 +1,8 @@
 qnorm_mix <- function(p, pi, mean, sd, lower.tail = TRUE, log.p = FALSE){
   if(length(p) == 1){
     g <- length(pi)
-    if(sum(pi) == 1 && min(pi) > 0 && length(mean) == g &&
-       length(sd) == g && min(sd) > 0){
+    if(sum(pi) == 1 && min(c(pi, sd)) > 0 && length(mean) == g && 
+       length(sd) == g){
       if(log.p){
         p = exp(p)
       }

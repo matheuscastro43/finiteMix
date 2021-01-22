@@ -1,7 +1,7 @@
 qexp_mix <- function(p, pi, rate, lower.tail = TRUE, log.p = FALSE){
   if(length(p) == 1){
     g <- length(pi)
-    if(sum(pi) == 1 && min(pi) > 0 && length(rate) == g && min(rate) > 0){
+    if(sum(pi) == 1 && min(c(pi, rate)) > 0 && length(rate) == g){
       if(log.p){
         p = exp(p)
       }
