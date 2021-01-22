@@ -11,7 +11,7 @@ rgamma_mix = function(n, pi, alpha, beta, plot.it = TRUE, empirical = FALSE, col
       if(alpha[j] >= 1){
         modal[j] = dgamma_mix((alpha[j]-1)*beta[j], pi, alpha, beta)
       }else{
-        U = modal[j] = 1
+        U = modal[j] = 30
         while(modal[j] >= 0.9 * U){
           modal[j] = optimize(function(x) dgamma(x, alpha[j], beta[j]), interval = c(0, U), maximum = T)$maximum
           U = 2 * U
@@ -32,7 +32,6 @@ rgamma_mix = function(n, pi, alpha, beta, plot.it = TRUE, empirical = FALSE, col
       d.breaks = ceiling(nclass.Sturges(sample)*2.5)
       modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
         breaks = d.breaks}, ...)$density)))
-      modal = 1
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",

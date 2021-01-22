@@ -1,13 +1,13 @@
 rglindley = function(n, alpha, beta, gamma, plot.it = TRUE, empirical = FALSE, 
                      col.pop = "red3", col.empirical = "navy", ...){
   if(n == floor(n) && min(c(alpha, beta, gamma, n)) > 0){
-    pi = c(1/(1 + beta*gamma), beta*gamma/(1 + beta*gamma))
+    pi = c(1/(1 + beta*gamma), 1 - 1/(1 + beta*gamma))
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
     if(alpha >= 1){
       modal = max(dglindley(c((alpha-1)*beta, (alpha)*beta), alpha, beta, gamma))
     }else{
-      U = modal = 1
+      U = modal = 30
       while(modal >= 0.9 * U){
         modal = optimize(function(x) dglindley(x, alpha, beta, gamma), interval = c(0, U), maximum = T)$maximum
         U = 2 * U

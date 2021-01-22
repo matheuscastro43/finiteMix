@@ -3,7 +3,7 @@ dglindley <- function(x, alpha, beta, gamma, log = FALSE){
     if(min(c(alpha, beta, gamma)) > 0){
       aux = 0
       if(x >= 0){
-        pi = c(1/(1 + beta*gamma), beta*gamma/(1 + beta*gamma))
+        pi = c(1/(1 + beta*gamma), 1 - 1/(1 + beta*gamma))
         aux = dgamma_mix(x, pi, c(alpha, alpha + 1), rep(beta, 2))
       }
       if(!log){

@@ -1,7 +1,7 @@
 rlindley = function(n, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                      col.empirical = "navy", ...){
   if(n == floor(n) && min(c(beta, n)) > 0){
-    pi = c(1/(1 + beta), beta/(1 + beta))
+    pi = c(1/(1 + beta), 1 - 1/(1 + beta))
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
     modal = dlindley(0, beta)
