@@ -5,7 +5,7 @@ rglindley = function(n, alpha, beta, gamma, plot.it = TRUE, empirical = FALSE,
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
     if(alpha >= 1){
-      modal = max(dglindley(c((alpha-1)/beta, (alpha)/beta), alpha, beta, gamma))
+      modal = max(dglindley(c((alpha-1)*beta, (alpha)*beta), alpha, beta, gamma))
     }else{
       U = modal = 1
       while(modal >= 0.9 * U){
@@ -13,12 +13,16 @@ rglindley = function(n, alpha, beta, gamma, plot.it = TRUE, empirical = FALSE,
         U = 2 * U
       }
       modal = dglindley(modal, alpha, beta, gamma)
+      if(modal > 10* dglindley(1, alpha, beta, gamma)){
+        modal = dglindley(1, alpha, beta, gamma)
+      }
     }
     
     sample = rgamma_mix(n, pi, c(alpha, alpha + 1), rep(beta, 2), plot.it = FALSE)$sample
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-      modal = max(modal, max(density(sample)$y))*1.1
+      modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
+        breaks = d.breaks}, ...)$density)))
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",

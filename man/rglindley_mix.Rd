@@ -33,7 +33,8 @@
 
 \examples{
 ## Generate a sample.
-data = rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3)
+data = rglindley_mix(n = 1000, pi = c(0.6, 0.4), alpha = c(2, 6),
+                     beta = c(2, 3), gamma = c(4, 2))
 
 ## Sample vector.
 data$sample
@@ -41,16 +42,20 @@ data$sample
 data$plot
 
 ## Not plotting the graphic.
-rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3, plot.it = FALSE)
+rglindley_mix(n = 1000, pi = c(0.6, 0.4), alpha = c(2, 6), beta = c(2, 3),
+              gamma = c(4, 2), plot.it = FALSE)
 
 ## Adding the empirical curve to the graphic.
-rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3, plot.it = TRUE,
-          empirical = TRUE)
+rglindley_mix(n = 1000, pi = c(0.6, 0.4), alpha = c(2, 6), beta = c(2, 3),
+              gamma = c(4, 2), plot.it = TRUE,
+              empirical = TRUE)
 
 ## Changing the color of the curves.
-rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3, plot.it = TRUE,
-          empirical = TRUE, col.pop = "blue", col.empirical = "green")
+rglindley_mix(n = 1000, pi = c(0.6, 0.4), alpha = c(2, 6), beta = c(2, 3),
+              gamma = c(4, 2), plot.it = TRUE,empirical = TRUE, 
+              col.pop = "blue", col.empirical = "green")
 
 ## Using "...".
-rcnorm(n = 1000, pi = c(0.6, 0.4), mean = 10, sd = 1, gamma = 3, breaks = 300)
+rglindley_mix(n = 1000, pi = c(0.6, 0.4), alpha = c(2, 6), beta = c(2, 3), 
+              gamma = c(4, 2), breaks = 300)
 }

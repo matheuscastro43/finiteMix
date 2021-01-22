@@ -1,11 +1,14 @@
 rlindley_mix = function(n, pi, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
-                     col.empirical = "navy", ...){
+                        col.empirical = "navy", ...){
   g <- length(pi)
   if(n == floor(n) && sum(pi) == 1 && min(c(pi, beta, n)) > 0 && length(beta) == g){
     
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
-    modal <- max(dlindley_mix(sapply(beta, molindley), pi, beta))
+    modal = dlindley_mix(0, pi, beta)
+    if(modal > 10* dlindley_mix(1, pi, beta)){
+      modal = dlindley_mix(1, pi, beta)
+    }
     
     sample = NULL
     for(j in 1:g){
@@ -13,7 +16,8 @@ rlindley_mix = function(n, pi, beta, plot.it = TRUE, empirical = FALSE, col.pop 
     }
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-      modal = max(modal, max(density(sample)$y))
+      modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
+        breaks = d.breaks}, ...)$density)))
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",

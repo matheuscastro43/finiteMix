@@ -4,12 +4,13 @@ rlindley = function(n, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3"
     pi = c(1/(1 + beta), beta/(1 + beta))
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
-    modal <- max(dlindley(c(mogamma(1, beta), mogamma(2, beta)), beta))
+    modal = dlindley(0, beta)
     
     sample = rgamma_mix(n, pi, c(1, 2), rep(beta, 2), plot.it = FALSE)$sample
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-        modal = max(modal, max(density(sample)$y))
+        modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
+          breaks = d.breaks}, ...)$density)))
       hist(sample, freq = F, border = "gray48",
            main = "Sampling distribution of X", xlab = "x",
            ylab = "Density",
@@ -34,7 +35,7 @@ rlindley = function(n, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3"
       names(output) = c("sample", "beta", "plot")
     }
     else{
-      output = list(sample, beta, sample[,2])
+      output = list(sample, beta)
       names(output) = c("sample", "beta")
     }
     return(output)}

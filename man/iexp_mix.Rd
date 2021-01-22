@@ -54,13 +54,13 @@ CASTRO, M. O.; MONTALVO, G. S. A.}
 
 \examples{
 ## Generate a sample.
-data = rexp_mix(n = 1000, pi = c(0.2, 0.8), rate = c(3, 15))
+data = rexp_mix(n = 1000, pi = c(0.2, 0.8), rate = c(1, 15))
 
 ## And now, estimate the parameters, using the 'data' list.
 iexp_mix(data, g = 2)
 
 ## Or using the sample vector.
-iexp_mix(data$sample, g = 2)
+## like "iexp_mix(data$sample, g = 2)"
 
 ## Using the diference in the log-likelihood as stop criteria.
 iexp_mix(data, g = 2, criteria = "dif.lh")
@@ -68,9 +68,8 @@ iexp_mix(data, g = 2, criteria = "dif.lh")
 ## Not plotting the graphic.
 iexp_mix(data, g = 2, plot.it = FALSE)
 
-## Adding the empirical curve to the graphic.
-iexp_mix(data, g = 2, empirical = TRUE)
-
-## Changing the color of the curves.
-iexp_mix(data, g = 2, empirical = TRUE, col.estimated = "pink", col.empirical = "red3")
+## Adding the empirical curve to the graphic and changing the color of the 
+## curves.
+iexp_mix(data, g = 2, empirical = TRUE, col.estimated = "pink",
+         col.empirical = "red3")
 }
