@@ -7,13 +7,15 @@
 \description{ Estimates parameters of a univariate Normal mixture with k-means clustering and EM-algorithm.}
 
 \usage{
-enorm_mix(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
-          col.estimated = "orange", col.empirical = "navy", ...)
+enorm_mix(data, g, lim.em = 100, criteria = "dif.psi", plot.it = TRUE,
+          empirical = FALSE, col.estimated = "orange", col.empirical = "navy",
+          ...)
 }
 
 \arguments{
 \item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rnorm_mix}.}
 \item{g}{ number of components in the mixture.}
+\item{lim.em}{ limit of EM iteractions.}
 \item{criteria}{ the stop criteria to be used, could be "dif.psi" to calculate differences on
 parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
 \item{plot.it}{ logical, TRUE to plot the histogram with estimated distribution curve.}

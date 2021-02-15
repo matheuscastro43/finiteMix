@@ -1,4 +1,5 @@
-enorm_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
+enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
+                     plot.it = TRUE, empirical = FALSE, 
                      col.estimated = "orange", col.empirical = "navy", ...){
   if((is.numeric(data) || is.numeric(data$sample)) && g == floor(g) && g > 1 &&
      is.logical(plot.it) && is.logical(empirical) &&
@@ -6,17 +7,28 @@ enorm_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
     if(is.list(data)){data = data$sample}
     data <- sort(data)
     n <- length(data)
-
+    
     k <- kmeans(data, g)
     pi <- table(k$cluster)/n
     medias <- tapply(data, k$cluster, mean)
     dps <- tapply(data, k$cluster, sd)
     psi <- matrix(c(pi, medias, dps), 3, byrow = T)
-
+    
     count = 0
     L <- function(I){ sum ( log(pi[I] * dnorm(data[which(k$cluster == I)], mean = medias[I], sd = dps[I]) ) ) }
-    LF <- sum(as.numeric(lapply(1:g, L))); count = 1
+    LF <- sum(as.numeric(lapply(1:g, L))); count = 0
     while(T){
+      progress <- function (x, max = lim.em) {
+        percent <- x / max * 100
+        cat(sprintf('\r[%-50s] %d%%',
+                    paste(rep('=', percent / 2), collapse = ''),
+                    floor(percent)))
+        if (x == max)
+          cat('\n')
+      }
+      if(count == 0)
+        cat("Limit of EM Interactions: \n")
+      progress(count)
       Wij <- matrix(0, nrow = n, ncol = g)
       for(i in 1:n){
         for(j in 1:g){
@@ -51,6 +63,11 @@ enorm_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
         psi <- psi_new
       }
       count = count + 1
+      if(count >= lim.em){
+        progress(count)
+        message("\nLimit of Iterations reached!")
+        break
+      }
     }
     if(plot.it == TRUE){
       d.breaks <- ceiling(nclass.Sturges(data)*2.5)
@@ -60,7 +77,7 @@ enorm_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
            ylab = "Density",
            ylim = c(0, modal),
            if(any(names(list(...)) == "breaks") == FALSE){breaks = d.breaks}, ...)
-
+      
       estimada = function(x){dnorm_mix(x, pi, medias, dps)}
       curve(estimada, col = col.estimated, lwd = 3, add = T)
       if(empirical){
@@ -78,8 +95,8 @@ enorm_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
     ordem = order(medias)
     class = kmeans(data, centers = medias[ordem])$cluster
     if(plot.it){
-    output = list(class, pi[ordem], medias[ordem], dps[ordem], count, p)
-    names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat", "EM-interactions", "plot")}
+      output = list(class, pi[ordem], medias[ordem], dps[ordem], count, p)
+      names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat", "EM-interactions", "plot")}
     else{
       output = list(class, pi[ordem], medias[ordem], dps[ordem], count)
       names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat", "EM-interactions")

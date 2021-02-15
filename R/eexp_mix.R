@@ -1,4 +1,5 @@
-eexp_mix <- function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
+eexp_mix <- function(data, g, lim.em = 100, criteria = "dif.psi", 
+                     plot.it = TRUE, empirical = FALSE,
                      col.estimated = "orange", col.empirical = "navy", ...){
   if((is.numeric(data) || is.numeric(data$sample)) && g == floor(g) && g > 1 &&
      is.logical(plot.it) && is.logical(empirical) &&
@@ -16,8 +17,19 @@ eexp_mix <- function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
     L <- function(I) {sum(log(pi[I] * dexp(data[k$cluster == I], rate[I])))}
     LF <- sum(as.numeric(lapply(1:g, L)))
 
-    count = 1
+    count = 0
     while(T){
+      progress <- function (x, max = lim.em) {
+        percent <- x / max * 100
+        cat(sprintf('\r[%-50s] %d%%',
+                    paste(rep('=', percent / 2), collapse = ''),
+                    floor(percent)))
+        if (x == max)
+          cat('\n')
+      }
+      if(count == 0)
+        cat("Limit of EM Interactions: \n")
+      progress(count)
       Wij <- matrix(0, nrow = n, ncol = g)
       for(i in 1:n){
         for(j in 1:g){
@@ -28,11 +40,11 @@ eexp_mix <- function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
       Wj <- colSums(Wij)
       pi <- 1/n * Wj
       for(j in 1:g){
-      rate[j] <- Wj[j]/(sum(data*Wij[,j]))
+        rate[j] <- Wj[j]/(sum(data*Wij[,j]))
       }
       psi_new <- matrix(c(pi, rate), 2, byrow = T)
       LF_new <- sum(as.numeric(lapply(1:g, L)))
-
+      
       if(criteria == "dif.lh"){
         crit <- LF_new - LF
         if((abs(crit) < 1*10^(-5)))break;
@@ -44,6 +56,11 @@ eexp_mix <- function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
         psi <- psi_new
       }
       count = count + 1
+      if(count >= lim.em){
+        progress(count)
+        message("\nLimit of Iterations reached!")
+        break
+      }
     }
     if(plot.it == TRUE){
       d.breaks <- ceiling(nclass.Sturges(data)*2.5)
@@ -66,8 +83,8 @@ eexp_mix <- function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
     ordem = order(rate, decreasing = T)
     class = kmeans(data, centers = 1/as.numeric(rate[ordem]))$cluster
     if(plot.it){
-    saida = list(class, pi[ordem], as.numeric(rate[ordem]), count, p)
-    names(saida) = c("classification", "pi_hat", "lambda_hat", "EM-interactions", "plot")
+      saida = list(class, pi[ordem], as.numeric(rate[ordem]), count, p)
+      names(saida) = c("classification", "pi_hat", "lambda_hat", "EM-interactions", "plot")
     }else{
       saida = list(class, pi[ordem], as.numeric(rate[ordem]), count)
       names(saida) = c("classification", "pi_hat", "lambda_hat", "EM-interactions")

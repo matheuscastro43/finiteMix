@@ -1,23 +1,35 @@
-epois_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
+epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi", 
+                     plot.it = TRUE, empirical = FALSE, 
                      col.estimated = "orange", col.empirical = "navy", ...){
   if((is.numeric(data) || is.numeric(data$sample)) && is.logical(plot.it) &&
      is.logical(empirical) && (criteria == "dif.lh" || criteria == "dif.psi")){
-
+    
     if(is.list(data)){data <- data$sample}
     data <- sort(data)
     n <- length(data)
-
+    
     k <- kmeans(-data, g)
     pi <- table(k$cluster)/n
     medias <- tapply(data, k$cluster, mean)
     variancias <- tapply(data, k$cluster, var)
     lambda <- apply(rbind(medias, variancias), 2, mean)
     psi <- matrix(c(pi, lambda), 2, byrow = T)
-
+    
     L <- function(I){ sum ( log(pi[I] * dpois(data[which(k$cluster == I)],
                                               lambda = lambda[I]) ) ) }
-    LF <- sum(as.numeric(lapply(1:g, L))); count = 1
+    LF <- sum(as.numeric(lapply(1:g, L))); count = 0
     while(T){
+      progress <- function (x, max = lim.em) {
+        percent <- x / max * 100
+        cat(sprintf('\r[%-50s] %d%%',
+                    paste(rep('=', percent / 2), collapse = ''),
+                    floor(percent)))
+        if (x == max)
+          cat('\n')
+      }
+      if(count == 0)
+        cat("Limit of EM Interactions: \n")
+      progress(count)
       Wij <- matrix(0, nrow = n, ncol = g)
       for(i in 1:n){
         for(j in 1:g){
@@ -52,6 +64,11 @@ epois_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
         psi <- psi_new
       }
       count = count + 1
+      if(count >= lim.em){
+        progress(count)
+        message("\nLimit of Iterations reached!")
+        break
+      }
     }
     if(plot.it == TRUE){
       d.breaks <- ceiling(nclass.Sturges(data)*2.5)
@@ -80,8 +97,8 @@ epois_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = 
     ordem = order(medias)
     class = kmeans(data, centers = lambda[ordem])$cluster
     if(plot.it){
-    saida = list(class, pi[ordem], lambda[ordem], count, p)
-    names(saida) = c("classification" ,"pi_hat", "lambda_hat", "EM-interactions", "plot")
+      saida = list(class, pi[ordem], lambda[ordem], count, p)
+      names(saida) = c("classification" ,"pi_hat", "lambda_hat", "EM-interactions", "plot")
     }else{
       saida = list(class, pi[ordem], lambda[ordem], count)
       names(saida) = c("classification" ,"pi_hat", "lambda_hat", "EM-interactions")
