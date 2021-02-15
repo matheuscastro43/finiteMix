@@ -1,18 +1,18 @@
-\name{Inferences Normal Mixture}
+\name{Inferences Exponential Mixture}
 
-\alias{inorm_mix}
+\alias{eexp_mix}
 
-\title{ Normal Mixture Estimation}
+\title{ Exponential Mixture Estimation}
 
-\description{ Estimates parameters of a univariate Normal mixture with k-means clustering and EM-algorithm.}
+\description{ Estimates parameters of a univariate Exponential mixture with k-means clustering and EM-algorithm.}
 
 \usage{
-inorm_mix(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
-          col.estimated = "orange", col.empirical = "navy", ...)
+eexp_mix(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
+                     col.estimated = "orange", col.empirical = "navy", ...)
 }
 
 \arguments{
-\item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rnorm_mix}.}
+\item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rexp_mix}.}
 \item{g}{ number of components in the mixture.}
 \item{criteria}{ the stop criteria to be used, could be "dif.psi" to calculate differences on
 parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
@@ -23,11 +23,9 @@ parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
 \item{...}{ further arguments and graphical parameters passed to \link[graphics]{hist}.}
 }
 
-
 %\details{
 %%  ~~ If necessary, more details than the description above ~~
 %}
-
 
 %\value{
 %%  ~Describe the value returned
@@ -36,7 +34,6 @@ parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
 %}
-
 
 %\references{
 %% ~put references to the literature/web site here ~
@@ -49,32 +46,30 @@ CASTRO, M. O.; MONTALVO, G. S. A.}
 %%  ~~further notes~~
 %}
 
-% \seealso{
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+%\seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 %}
 
 \examples{
 ## Generate a sample.
-data = rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2))
+data = rexp_mix(n = 1000, pi = c(0.2, 0.8), rate = c(1, 15))
 
 ## And now, estimate the parameters, using the 'data' list.
-inorm_mix(data, g = 2)
+eexp_mix(data, g = 2)
 
 ## Or using the sample vector.
-inorm_mix(data$sample, g = 2)
+## like "iexp_mix(data$sample, g = 2)"
 
 ## Using the diference in the log-likelihood as stop criteria.
-inorm_mix(data, g = 2, criteria = "dif.lh")
+eexp_mix(data, g = 2, criteria = "dif.lh")
 
 ## Not plotting the graphic.
-inorm_mix(data, g = 2, plot.it = FALSE)
+eexp_mix(data, g = 2, plot.it = FALSE)
 
-## Adding the empirical curve to the graphic.
-inorm_mix(data, g = 2, empirical = TRUE)
-
-## Changing the color of the curves.
-inorm_mix(data, g = 2, empirical = TRUE, col.estimated = "pink", col.empirical = "red3")
-
-## Using "..."
-inorm_mix(data, g = 2, empirical = TRUE, col.estimated = "pink", col.empirical = "red3",
-          breaks = 300)}
+## Adding the empirical curve to the graphic and changing the color of the 
+## curves.
+eexp_mix(data, g = 2, empirical = TRUE, col.estimated = "pink",
+         col.empirical = "red3")
+}

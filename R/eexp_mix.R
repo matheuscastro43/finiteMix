@@ -1,4 +1,4 @@
-iexp_mix <- function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
+eexp_mix <- function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
                      col.estimated = "orange", col.empirical = "navy", ...){
   if((is.numeric(data) || is.numeric(data$sample)) && g == floor(g) && g > 1 &&
      is.logical(plot.it) && is.logical(empirical) &&

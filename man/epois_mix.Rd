@@ -1,18 +1,18 @@
-\name{Inferences Exponential Mixture}
+\name{Inferences Poisson Mixture}
 
-\alias{iexp_mix}
+\alias{epois_mix}
 
-\title{ Exponential Mixture Estimation}
+\title{ Poisson Mixture Estimation}
 
-\description{ Estimates parameters of a univariate Exponential mixture with k-means clustering and EM-algorithm.}
+\description{ Estimates parameters of a univariate Poisson mixture with k-means clustering and EM-algorithm.}
 
 \usage{
-iexp_mix(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
+epois_mix(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
                      col.estimated = "orange", col.empirical = "navy", ...)
 }
 
 \arguments{
-\item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rexp_mix}.}
+\item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rpois_mix}.}
 \item{g}{ number of components in the mixture.}
 \item{criteria}{ the stop criteria to be used, could be "dif.psi" to calculate differences on
 parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
@@ -23,9 +23,11 @@ parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
 \item{...}{ further arguments and graphical parameters passed to \link[graphics]{hist}.}
 }
 
+
 %\details{
 %%  ~~ If necessary, more details than the description above ~~
 %}
+
 
 %\value{
 %%  ~Describe the value returned
@@ -34,6 +36,7 @@ parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
 %}
+
 
 %\references{
 %% ~put references to the literature/web site here ~
@@ -46,30 +49,33 @@ CASTRO, M. O.; MONTALVO, G. S. A.}
 %%  ~~further notes~~
 %}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-%\seealso{
+% \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 %}
 
 \examples{
 ## Generate a sample.
-data = rexp_mix(n = 1000, pi = c(0.2, 0.8), rate = c(1, 15))
+data = rpois_mix(n = 1000, pi = c(0.6, 0.4), lambda = c(10, 25))
 
 ## And now, estimate the parameters, using the 'data' list.
-iexp_mix(data, g = 2)
+epois_mix(data, g = 2)
 
 ## Or using the sample vector.
-## like "iexp_mix(data$sample, g = 2)"
+epois_mix(data$sample, g = 2)
 
 ## Using the diference in the log-likelihood as stop criteria.
-iexp_mix(data, g = 2, criteria = "dif.lh")
+epois_mix(data, g = 2, criteria = "dif.lh")
 
 ## Not plotting the graphic.
-iexp_mix(data, g = 2, plot.it = FALSE)
+epois_mix(data, g = 2, plot.it = FALSE)
 
-## Adding the empirical curve to the graphic and changing the color of the 
-## curves.
-iexp_mix(data, g = 2, empirical = TRUE, col.estimated = "pink",
-         col.empirical = "red3")
+## Adding the empirical curve to the graphic.
+epois_mix(data, g = 2, empirical = TRUE)
+
+## Changing the color of the curves.
+epois_mix(data, g = 2, empirical = TRUE, col.estimated = "pink", col.empirical = "red3")
+
+## Using "..."
+epois_mix(data, g = 2, empirical = TRUE, col.estimated = "pink", col.empirical = "red3",
+          breaks = 300)
 }

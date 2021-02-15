@@ -1,4 +1,4 @@
-ipois_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
+epois_mix = function(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
                      col.estimated = "orange", col.empirical = "navy", ...){
   if((is.numeric(data) || is.numeric(data$sample)) && is.logical(plot.it) &&
      is.logical(empirical) && (criteria == "dif.lh" || criteria == "dif.psi")){

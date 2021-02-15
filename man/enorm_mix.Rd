@@ -1,18 +1,18 @@
-\name{Inferences Poisson Mixture}
+\name{Inferences Normal Mixture}
 
-\alias{ipois_mix}
+\alias{enorm_mix}
 
-\title{ Poisson Mixture Estimation}
+\title{ Normal Mixture Estimation}
 
-\description{ Estimates parameters of a univariate Poisson mixture with k-means clustering and EM-algorithm.}
+\description{ Estimates parameters of a univariate Normal mixture with k-means clustering and EM-algorithm.}
 
 \usage{
-ipois_mix(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
-                     col.estimated = "orange", col.empirical = "navy", ...)
+enorm_mix(data, g, criteria = "dif.psi", plot.it = TRUE, empirical = FALSE,
+          col.estimated = "orange", col.empirical = "navy", ...)
 }
 
 \arguments{
-\item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rpois_mix}.}
+\item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rnorm_mix}.}
 \item{g}{ number of components in the mixture.}
 \item{criteria}{ the stop criteria to be used, could be "dif.psi" to calculate differences on
 parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
@@ -55,27 +55,26 @@ CASTRO, M. O.; MONTALVO, G. S. A.}
 
 \examples{
 ## Generate a sample.
-data = rpois_mix(n = 1000, pi = c(0.6, 0.4), lambda = c(10, 25))
+data = rnorm_mix(n = 1000, pi = c(0.6, 0.4), mean = c(10, 18), sd = c(1, 2))
 
 ## And now, estimate the parameters, using the 'data' list.
-ipois_mix(data, g = 2)
+enorm_mix(data, g = 2)
 
 ## Or using the sample vector.
-ipois_mix(data$sample, g = 2)
+enorm_mix(data$sample, g = 2)
 
 ## Using the diference in the log-likelihood as stop criteria.
-ipois_mix(data, g = 2, criteria = "dif.lh")
+enorm_mix(data, g = 2, criteria = "dif.lh")
 
 ## Not plotting the graphic.
-ipois_mix(data, g = 2, plot.it = FALSE)
+enorm_mix(data, g = 2, plot.it = FALSE)
 
 ## Adding the empirical curve to the graphic.
-ipois_mix(data, g = 2, empirical = TRUE)
+enorm_mix(data, g = 2, empirical = TRUE)
 
 ## Changing the color of the curves.
-ipois_mix(data, g = 2, empirical = TRUE, col.estimated = "pink", col.empirical = "red3")
+enorm_mix(data, g = 2, empirical = TRUE, col.estimated = "pink", col.empirical = "red3")
 
 ## Using "..."
-ipois_mix(data, g = 2, empirical = TRUE, col.estimated = "pink", col.empirical = "red3",
-          breaks = 300)
-}
+enorm_mix(data, g = 2, empirical = TRUE, col.estimated = "pink", col.empirical = "red3",
+          breaks = 300)}
