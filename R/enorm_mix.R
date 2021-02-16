@@ -27,7 +27,7 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
           cat('\n')
       }
       if(count == 0)
-        cat("Limit of EM Interactions: \n")
+        cat("Limit of EM Interactions (", lim.em ,"): \n", sep = "")
       progress(count)
       Wij <- matrix(0, nrow = n, ncol = g)
       for(i in 1:n){

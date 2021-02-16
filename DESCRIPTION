@@ -3,7 +3,7 @@ Type: Package
 Title: Finite Mixture Models
 Version: 0.5.0
 Author: CASTRO, M. O.; MONTALVO, G. S. A.
-Maintainer: Matheus Oliveira de Castro <matheuscastro43@alu.ufc.br>
+Maintainer: Matheus Oliveira de Castro <mtcastro43@gmail.com>
 Description: Functions to fit finite mixture models.
 License: GPL (>= 2.0)
 Encoding: UTF-8
@@ -11,5 +11,7 @@ LazyData: true
 RoxygenNote: 6.1.1
 Imports: graphics,
          stats,
-         grDevices
+         grDevices,
+         utils,
+         bmixture
 Suggests: ggplot2
