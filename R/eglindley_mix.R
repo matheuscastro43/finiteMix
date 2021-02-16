@@ -70,6 +70,8 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it = 
           return(aux)
         }
         q = sum(sapply(1:g, Qj))
+        if(q == -Inf) return(.Machine$double.xmax/1e+08)
+        if(q == Inf) return(-.Machine$double.xmax/1e+08)
         return(-q)
       }
       grQ = function(param){
@@ -92,8 +94,8 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it = 
       }
       
       estim = optim(par = c(alphas, betas, gammas), fn = Q, method = "L-BFGS-B",
-                    lower = c(rep(0.1, 3 * (g - 1)), rep(1, g)),
-                    upper = rep(100, 3 * g), gr = grQ, 
+                    lower = rep(0.1, 3 * g),
+                    upper = rep(Inf, 3 * g), gr = grQ, 
                     control = list(maxit = 10))
       alphas = estim$par[1:g]
       betas = estim$par[(g + 1):(2*g)]
