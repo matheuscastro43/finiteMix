@@ -17,6 +17,8 @@ eglindley = function(data, plot.it = TRUE, empirical = FALSE,
       gamma = Psi[3]
       lv = (alpha - 1) * sum(log(x)) + sum(log(alpha + gamma*x)) - sum(x)/beta -
         n * (alpha * log(beta) + log(beta*gamma + 1) + log(gamma(alpha + 1)))
+      if(lv == -Inf) return(.Machine$double.xmax/1e+08)
+      if(lv == Inf) return(-.Machine$double.xmax/1e+08)
       return(-lv)
     }
     
