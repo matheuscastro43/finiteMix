@@ -1,19 +1,19 @@
-\name{Inferences Generalized Lindley Mixture}
+\name{Inferences Gamma Mixture}
 
-\alias{eglindley_mix}
+\alias{egamma_mix}
 
-\title{ Generalized Lindley Mixture Estimation}
+\title{ Gamma Mixture Estimation}
 
-\description{ Estimates parameters of a univariate Generalized Lindley Mixture with k-means clustering and EM-algorithm.}
+\description{ Estimates parameters of a univariate Gamma Mixture with k-means clustering and EM-algorithm.}
 
 \usage{
-eglindley_mix(data, g, lim.em = 100, criteria = "dif.psi", plot.it = TRUE,
-              empirical = FALSE, col.estimated = "orange", col.empirical = "navy",
+egamma_mix(data, g, lim.em = 100, criteria = "dif.psi", plot.it = TRUE,
+           empirical = FALSE, col.estimated = "orange", col.empirical = "navy",
               ...)
 }
 
 \arguments{
-\item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rglindley_mix}.}
+\item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rgamma_mix}.}
 \item{g}{ number of components in the mixture.}
 \item{lim.em}{ limit of EM iteractions.}
 \item{criteria}{ the stop criteria to be used, could be "dif.psi" to calculate differences on
@@ -57,27 +57,28 @@ CASTRO, M. O.; MONTALVO, G. S. A.}
 
 \examples{
 ## Generate a sample.
-data = rglindley_mix(n = 1000, pi = c(0.6, 0.4), alpha = c(10, 18), beta = c(1, 2), gamma = c(3, 4))
+data = rgamma_mix(n = 1000, pi = c(0.6, 0.4), alpha = c(10, 18), 
+                  beta =c(1, 2),)
 
 ## And now, estimate the parameters, using the 'data' list.
-eglindley_mix(data, g = 2, lim.em = 5)
+egamma_mix(data, g = 2)
 
 ## Or using the sample vector.
-# eglindley_mix(data$sample, g = 2, lim.em = 5)
+egamma_mix(data$sample, g = 2)
 
 ## Using the diference in the log-likelihood as stop criteria.
-# eglindley_mix(data, g = 2, criteria = "dif.lh", lim.em = 10)
+egamma_mix(data, lim.em = 5, g = 2, criteria = "dif.lh")
 
 ## Not plotting the graphic.
-# eglindley_mix(data, g = 2, plot.it = FALSE, lim.em = 5)
+egamma_mix(data, lim.em = 5, g = 2, plot.it = FALSE)
 
 ## Adding the empirical curve to the graphic.
-#eglindley_mix(data, g = 2, empirical = TRUE, lim.em = 5)
+egamma_mix(data, lim.em = 5, g = 2, empirical = TRUE)
 
 ## Changing the color of the curves.
-# eglindley_mix(data, g = 2, lim.em = 5, empirical = TRUE, col.estimated = "pink",
-#               col.empirical = "red3")
+# egamma_mix(data, lim.em = 5, g = 2, empirical = TRUE, col.estimated = "pink",
+#            col.empirical = "red3")
 
 ## Using "..."
-# eglindley_mix(data, g = 2, lim.em = 5, empirical = TRUE, col.estimated = "pink",
-#               col.empirical = "red3", breaks = 300)}
+# egamma_mix(data, lim.em = 5, g = 2, empirical = TRUE, col.estimated = "pink",
+#            col.empirical = "red3", breaks = 300)}
