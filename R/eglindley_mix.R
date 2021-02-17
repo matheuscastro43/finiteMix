@@ -28,7 +28,6 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
     betas = psi[3,]
     gammas = psi[4,]
 
-    count = 0
     L = function(I){ sum ( log(pi[I] * dglindley(data[which(k$cluster == I)], 
                                                  alpha = alphas[I], 
                                                  beta = betas[I],
