@@ -15,7 +15,8 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
     psi <- matrix(c(pi, medias, dps), 3, byrow = T)
     
     count = 0
-    L <- function(I){ sum ( log(pi[I] * dnorm(data[which(k$cluster == I)], mean = medias[I], sd = dps[I]) ) ) }
+    L <- function(I){ sum ( log(pi[I] * dnorm(data[which(k$cluster == I)], 
+                                              mean = medias[I], sd = dps[I])))}
     LF <- sum(as.numeric(lapply(1:g, L))); count = 0
     while(T){
       progress <- function (x, max = lim.em) {
@@ -32,21 +33,26 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       Wij <- matrix(0, nrow = n, ncol = g)
       for(i in 1:n){
         for(j in 1:g){
-          Wij[i,j] <- as.numeric((pi[j]*dnorm(data[i], mean = medias[j], sd = dps[j]))/
-                                   sum((pi * dnorm(data[i], mean = medias, sd = dps))))
+          Wij[i,j] <- as.numeric((pi[j]*dnorm(data[i], mean = medias[j], 
+                                              sd = dps[j]))/
+                                   sum((pi * dnorm(data[i], mean = medias, 
+                                                   sd = dps))))
         }
       }
       Wj <- colSums(Wij)
       pi <- 1/n * Wj
-      medias <- as.numeric(lapply(1:g, function(j){aux = 0; for(i in 1:n){aux = aux + (data[i]*Wij[i,j])/(Wj[j])};
+      medias <- as.numeric(lapply(1:g, function(j){
+        aux = 0; for(i in 1:n){aux = aux + (data[i]*Wij[i,j])/(Wj[j])};
       return(aux)}))
-      dps <- sqrt(as.numeric(lapply(1:g, function(j){aux = 0; for(i in 1:n){aux = aux + ((data[i]-medias[j])^2*Wij[i,j])/(Wj[j])};
+      dps <- sqrt(as.numeric(lapply(1:g, function(j){
+        aux = 0; for(i in 1:n){
+          aux = aux + ((data[i]-medias[j])^2*Wij[i,j])/(Wj[j])};
       return(aux)})))
       psi_new <- matrix(c(pi, medias, dps), 3, byrow = T)
       LF_new <- sum(as.numeric(lapply(1:g, L)))
       if(criteria == "dif.lh"){
         crit <- LF_new - LF
-        if((abs(crit) < 1*10^(-5)))break;
+        if((abs(crit) < 1*10^(-5))){cat("\n"); break}
         LF <- LF_new
       }
       else{
@@ -59,7 +65,7 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
           psi <- matrix(c(pi, medias, dps), 3, byrow = T)
           next
         }
-        if(crit < 1*10^(-5))break;
+        if(crit < 1*10^(-5)){cat("\n"); break}
         psi <- psi_new
       }
       count = count + 1
@@ -76,18 +82,21 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
            main = "Sampling distribution of X", xlab = "x",
            ylab = "Density",
            ylim = c(0, modal),
-           if(any(names(list(...)) == "breaks") == FALSE){breaks = d.breaks}, ...)
+           if(any(names(list(...)) == "breaks") == FALSE){breaks = 
+             d.breaks}, ...)
       
       estimada = function(x){dnorm_mix(x, pi, medias, dps)}
       curve(estimada, col = col.estimated, lwd = 3, add = T)
       if(empirical){
         lines(density(data),col = col.empirical, lwd = 3)
         legend("topright", legend=(c("Empirical", "Estimated")),
-               fill=c(col.empirical, col.estimated), border = c(col.empirical, col.estimated),
+               fill=c(col.empirical, col.estimated), border = c(col.empirical, 
+                                                                col.estimated),
                bty="n")
       }
       else{
-        legend("topright", legend = "Estimated", fill = col.estimated, border = col.estimated,
+        legend("topright", legend = "Estimated", fill = col.estimated, 
+               border = col.estimated,
                bty="n")
       }
       p <- recordPlot()

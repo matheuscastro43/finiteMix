@@ -46,7 +46,7 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       LF_new <- sum(as.numeric(lapply(1:g, L)))
       if(criteria == "dif.lh"){
         crit <- LF_new - LF
-        if((abs(crit) < 1*10^(-5)))break;
+        if((abs(crit) < 1*10^(-5))){cat("\n"); break}
         LF <- LF_new
       }
       else{
@@ -60,7 +60,7 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
           psi <- matrix(c(pi, lambda), 2, byrow = T)
           next
         }
-        if(crit < 1*10^(-5))break;
+        if(crit < 1*10^(-5)){cat("\n"); break}
         psi <- psi_new
       }
       count = count + 1
