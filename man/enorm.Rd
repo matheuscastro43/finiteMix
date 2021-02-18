@@ -1,18 +1,18 @@
-\name{Inferences Gamma Distribution}
+\name{Inferences Normal Distribution}
 
-\alias{egamma}
+\alias{enorm}
 
-\title{ Gamma Distribution Estimation}
+\title{ Normal Distribution Estimation}
 
-\description{ Estimates parameters of a univariate Gamma Distribution with maximum likelihood.}
+\description{ Estimates parameters of a univariate Normal Distribution with maximum likelihood.}
 
 \usage{
-egamma(data, plot.it = TRUE, empirical = FALSE, col.estimated = "orange",
-       col.empirical = "navy", ...)
+enorm(data, plot.it = TRUE, empirical = FALSE, col.estimated = "orange",
+      col.empirical = "navy", ...)
 }
 
 \arguments{
-\item{data}{ vector containing the sample as \link[stats]{rgamma}.}
+\item{data}{ vector containing the sample as \link[stats]{rnorm}.}
 \item{plot.it}{ logical, TRUE to plot the histogram with estimated distribution curve.}
 \item{empirical}{ logical, TRUE to add the empirical curve ("Kernel Density Estimation") in the plot.}
 \item{col.estimated}{ a colour to be used in the curve of estimated density.}
@@ -52,21 +52,21 @@ CASTRO, M. O.; MONTALVO, G. S. A.}
 
 \examples{
 ## Generate a sample.
-data = rgamma(n = 1000, shape = 18, scale = 2)
+data = rnorm(n = 1000, mean = 18, sd = 2)
 
 ## And now, estimate the parameters, using the 'data' list.
-egamma(data)
+enorm(data)
 
 ## Not plotting the graphic.
-egamma(data, plot.it = FALSE)
+enorm(data, plot.it = FALSE)
 
 ## Adding the empirical curve to the graphic.
-egamma(data, empirical = TRUE)
+enorm(data, empirical = TRUE)
 
 ## Changing the color of the curves.
-egamma(data, empirical = TRUE, col.estimated = "pink", 
-          col.empirical = "red3")
+enorm(data, empirical = TRUE, col.estimated = "pink", 
+      col.empirical = "red3")
 
 ## Using "..."
-egamma(data, empirical = TRUE, col.estimated = "pink", 
-       col.empirical = "red3", breaks = 300)}
+enorm(data, empirical = TRUE, col.estimated = "pink", 
+      col.empirical = "red3", breaks = 300)}

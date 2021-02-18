@@ -95,11 +95,14 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
     ordem = order(medias)
     class = kmeans(data, centers = medias[ordem])$cluster
     if(plot.it){
-      output = list(class, pi[ordem], medias[ordem], dps[ordem], count, p)
-      names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat", "EM-interactions", "plot")}
+      output = list(class, pi[ordem], medias[ordem], dps[ordem], LF_new, 
+                    count, p)
+      names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat",
+                        "logLik", "EM-interactions", "plot")}
     else{
-      output = list(class, pi[ordem], medias[ordem], dps[ordem], count)
-      names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat", "EM-interactions")
+      output = list(class, pi[ordem], medias[ordem], dps[ordem], LF_new, count)
+      names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat",
+                        "logLik", "EM-interactions")
     }
     return(output)
   }

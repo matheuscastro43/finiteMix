@@ -107,7 +107,7 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       LF_new = sum(as.numeric(lapply(1:g, L)))
       if(criteria == "dif.lh"){
         crit = LF_new - LF
-        if((abs(crit) < 1*10^(-2))){cat("\n"); break}
+        if((abs(crit) < 1*10^(-4))){cat("\n"); break}
         LF <- LF_new
       }
       else{
@@ -122,7 +122,7 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
           psi <- matrix(c(pi, alphas, betas, gammas), 4, byrow = T)
           next
         }
-        if(crit < 1*10^(-2)) {cat("\n"); break}
+        if(crit < 1*10^(-4)) {cat("\n"); break}
         psi = psi_new
       }
       count = count + 1
@@ -183,14 +183,14 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
   class = kmeans(data, centers = medias[ordem])$cluster
   if(plot.it){
     output = list(class, pi[ordem], alphas[ordem], betas[ordem], gammas[ordem],
-                  count, p)
+                  LF_new, count, p)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat", 
-                      "gamma_hat", "EM-interactions", "plot")}
+                      "gamma_hat", "logLik", "EM-interactions", "plot")}
   else{
     output = list(class, pi[ordem], alphas[ordem], betas[ordem], gammas[ordem],
-                  count)
+                  LF_new, count)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat",
-                      "gamma_hat", "EM-interactions")
+                      "gamma_hat", "logLik", "EM-interactions")
   }
   return(output)
 }

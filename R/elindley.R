@@ -25,6 +25,7 @@ elindley = function(data, plot.it = TRUE, empirical = FALSE,
               method = "L-BFGS-B", x = data, gr = grr)
     
     beta = b$par
+    LF = -b$value
     
       modal = max(dlindley(c(0, beta), beta))
     
@@ -57,11 +58,11 @@ elindley = function(data, plot.it = TRUE, empirical = FALSE,
     }
     ordem = order(beta)
     if(plot.it){
-      output = list(beta[ordem], p)
-      names(output) = c("beta_hat", "plot")}
+      output = list(beta[ordem], LF, p)
+      names(output) = c("beta_hat", "logLik", "plot")}
     else{
-      output = list(beta[ordem])
-      names(output) = c("beta_hat")
+      output = list(beta[ordem], LF)
+      names(output) = c("beta_hat", "logLik")
     }
     return(output)
   }

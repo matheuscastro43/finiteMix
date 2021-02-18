@@ -83,11 +83,13 @@ eexp_mix <- function(data, g, lim.em = 100, criteria = "dif.psi",
     ordem = order(rate, decreasing = T)
     class = kmeans(data, centers = 1/as.numeric(rate[ordem]))$cluster
     if(plot.it){
-      saida = list(class, pi[ordem], as.numeric(rate[ordem]), count, p)
-      names(saida) = c("classification", "pi_hat", "lambda_hat", "EM-interactions", "plot")
+      saida = list(class, pi[ordem], as.numeric(rate[ordem]), LF_new, count, p)
+      names(saida) = c("classification", "pi_hat", "lambda_hat",
+                       "logLik", "EM-interactions", "plot")
     }else{
-      saida = list(class, pi[ordem], as.numeric(rate[ordem]), count)
-      names(saida) = c("classification", "pi_hat", "lambda_hat", "EM-interactions")
+      saida = list(class, pi[ordem], as.numeric(rate[ordem]), LF_new, count)
+      names(saida) = c("classification", "pi_hat", "lambda_hat", 
+                       "logLik", "EM-interactions")
     }
     return(saida)
   }

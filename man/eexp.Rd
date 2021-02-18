@@ -1,18 +1,18 @@
-\name{Inferences Gamma Distribution}
+\name{Inferences Exponential Distribution}
 
-\alias{egamma}
+\alias{eexp}
 
-\title{ Gamma Distribution Estimation}
+\title{ Exponential Distribution Estimation}
 
-\description{ Estimates parameters of a univariate Gamma Distribution with maximum likelihood.}
+\description{ Estimates parameters of a univariate Exponential Distribution with maximum likelihood.}
 
 \usage{
-egamma(data, plot.it = TRUE, empirical = FALSE, col.estimated = "orange",
-       col.empirical = "navy", ...)
+eexp(data, plot.it = TRUE, empirical = FALSE, col.estimated = "orange",
+     col.empirical = "navy", ...)
 }
 
 \arguments{
-\item{data}{ vector containing the sample as \link[stats]{rgamma}.}
+\item{data}{ vector containing the sample as \link[stats]{rexp}.}
 \item{plot.it}{ logical, TRUE to plot the histogram with estimated distribution curve.}
 \item{empirical}{ logical, TRUE to add the empirical curve ("Kernel Density Estimation") in the plot.}
 \item{col.estimated}{ a colour to be used in the curve of estimated density.}
@@ -52,21 +52,21 @@ CASTRO, M. O.; MONTALVO, G. S. A.}
 
 \examples{
 ## Generate a sample.
-data = rgamma(n = 1000, shape = 18, scale = 2)
+data = rexp(n = 1000, rate = 1/10)
 
 ## And now, estimate the parameters, using the 'data' list.
-egamma(data)
+eexp(data)
 
 ## Not plotting the graphic.
-egamma(data, plot.it = FALSE)
+eexp(data, plot.it = FALSE)
 
 ## Adding the empirical curve to the graphic.
-egamma(data, empirical = TRUE)
+eexp(data, empirical = TRUE)
 
 ## Changing the color of the curves.
-egamma(data, empirical = TRUE, col.estimated = "pink", 
-          col.empirical = "red3")
+eexp(data, empirical = TRUE, col.estimated = "pink", 
+       col.empirical = "red3")
 
 ## Using "..."
-egamma(data, empirical = TRUE, col.estimated = "pink", 
+eexp(data, empirical = TRUE, col.estimated = "pink", 
        col.empirical = "red3", breaks = 300)}

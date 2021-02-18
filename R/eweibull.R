@@ -1,31 +1,39 @@
-egamma = function(data, plot.it = TRUE, empirical = FALSE, 
-                     col.estimated = "orange", col.empirical = "navy", ...){
+eweibull = function(data, plot.it = TRUE, empirical = FALSE, 
+                    col.estimated = "orange", col.empirical = "navy", ...){
   if((is.numeric(data) || is.numeric(data$sample)) && is.logical(plot.it) &&
      is.logical(empirical)){
     if(is.list(data)){data = data$sample}
     data = sort(data)
     n = length(data)
     
-    alphas = mean(data)^2/var(data)
-    betas = var(data)/mean(data)
+    medias = mean(data)
+    vars = var(data)
     
-    LV = function(Psi, x){
-      alpha = Psi[1]
-      beta = Psi[2]
-      lv = (alpha - 1) * sum(log(x)) - sum(x)/beta - n * alpha * log(beta) -
-        n * log(gamma(alpha))
+    shapeMoments <- function(shape){
+      log(gamma(1 + 2/shape)) - 2*log(gamma(1 + 1/shape)) - log(vars + medias^2) +
+        2*log(medias)
+    }
+    shapes = uniroot(shapeMoments, c(0.1, 100))$root
+    scales = medias/gamma(1 + 1/shapes)
+    
+    LV <- function(Psi, x){
+      shape = Psi[1]
+      scale = Psi[2]
+      lv = n*log(shape) - n*log(scale) + (shape - 1)*sum((log(x))) -
+        n*(shape - 1)*log(scale) - sum((x/scale)^shape)
       if(lv == -Inf) return(.Machine$double.xmax/1e+08)
       if(lv == Inf) return(-.Machine$double.xmax/1e+08)
       return(-lv)
     }
     
     grr = function(Psi, x){
-      alpha = Psi[1]
-      beta = Psi[2]
-      -c(sum(log(x)) - n * digamma(alpha) - n * log(beta),
-         sum(x)/beta^2 - n * alpha/beta)
+      shape = Psi[1]
+      scale = Psi[2]
+      -c(n/shape + sum(log(x)) - n*log(scale) - 
+           sum(log(x/scale) * (x/scale)^shape), 
+         -n/scale - n*(shape - 1)/scale + sum(shape/scale * (x/scale)^shape))
     }
-    b = optim(par = c(alphas, betas), fn = LV, lower = c(1e-04, 1e-04), 
+    b = optim(par = c(1, 9), fn = LV, lower = c(1e-04, 1e-04), 
               upper = c(Inf, Inf), method = "L-BFGS-B", x = data, gr = grr)
     
     alpha = b$par[1]
@@ -33,31 +41,22 @@ egamma = function(data, plot.it = TRUE, empirical = FALSE,
     LF = -b$value
     
     if(alpha >= 1){
-      modal = max(dgamma(c((alpha-1)*beta, (alpha)*beta), alpha, scale = beta))
+      modal = dweibull(beta * ((alpha - 1)/alpha)^(1/beta), alpha, beta)
     }else{
-      U = modal = 30
-      while(modal >= 0.9 * U){
-        modal = optimize(function(x) dgamma(x, alpha, scale = beta),
-                         interval = c(0, U), maximum = T)$maximum
-        U = 2 * U
-      }
-      modal = dgamma(modal, alpha, scale = beta)
-      if(modal > 10* dgamma(1, alpha, scale = beta)){
-        modal = dgamma(1, alpha, scale = beta)
-      }
+      modal = dweibull(.1, alpha, beta)
     }
     
     if(plot.it == TRUE){
       d.breaks = ceiling(nclass.Sturges(data)*2.5)
-      modal = min(c(1, max(modal, hist(data, if(any(names(list(...)) == "breaks") == FALSE){
-        breaks = d.breaks}, ...)$density)))
+      modal = max(modal, hist(data, if(any(names(list(...)) == "breaks") == FALSE){
+        breaks = d.breaks}, ...)$density)
       hist(data,freq = F,border = "gray48",
            main = "Sampling distribution of X", xlab = "x",
            ylab = "Density",
            ylim = c(0, modal),
            if(any(names(list(...)) == "breaks") == FALSE){breaks = d.breaks}, ...)
       
-      estimada = function(x){dgamma(x, alpha, scale = beta)}
+      estimada = function(x){dweibull(x, alpha, beta)}
       curve(estimada, col = col.estimated, lwd = 3, add = T)
       if(empirical){
         lines(density(data),col = col.empirical, lwd = 3)

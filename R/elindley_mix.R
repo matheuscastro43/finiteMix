@@ -153,13 +153,13 @@ elindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
   ordem = order(medias)
   class = kmeans(data, centers = medias[ordem])$cluster
   if(plot.it){
-    output = list(class, pi[ordem], betas[ordem], count, p)
+    output = list(class, pi[ordem], betas[ordem], LF_new, count, p)
     names(output) = c("classification", "pi_hat", "beta_hat", 
-                      "EM-interactions", "plot")}
+                       "logLik", "EM-interactions", "plot")}
   else{
-    output = list(class, pi[ordem], betas[ordem], count)
+    output = list(class, pi[ordem], betas[ordem], LF_new, count)
     names(output) = c("classification", "pi_hat", "beta_hat", 
-                      "EM-interactions")
+                      "logLik", "EM-interactions")
   }
   return(output)
 }

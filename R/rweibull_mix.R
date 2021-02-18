@@ -14,8 +14,9 @@ rweibull_mix <- function(n, pi, shape, scale, plot.it = TRUE, empirical = FALSE,
     }
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-      modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
-        breaks = d.breaks}, ...)$density)))
+      modal = max(modal, hist(sample, if(any(names(list(...)) == "breaks") 
+                                         == FALSE){
+        breaks = d.breaks}, ...)$density)
       hist(sample,freq = F,border = 1000,
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",

@@ -80,10 +80,11 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       x0 <- min(data)
       x1 <- max(data)
       par(new = T)
-      plot(x0:x1, lapply(x0:x1, estimada), type = "h", col = col.estimated, lwd = 2, main = "",
+      plot(x0:x1, lapply(x0:x1, estimada), type = "h", col = col.estimated,
+           lwd = 3, main = "",
            xlab = "", ylab = "", axes = F)
       if(empirical){
-        lines(density(data),col = col.empirical,lwd = 2)
+        lines(density(data),col = col.empirical,lwd = 3)
         legend("topright", legend=(c("Empirical", "Estimated")),
                fill=c(col.empirical, col.estimated),
                border = c(col.empirical, col.estimated), bty="n")
@@ -97,11 +98,13 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
     ordem = order(medias)
     class = kmeans(data, centers = lambda[ordem])$cluster
     if(plot.it){
-      saida = list(class, pi[ordem], lambda[ordem], count, p)
-      names(saida) = c("classification" ,"pi_hat", "lambda_hat", "EM-interactions", "plot")
+      saida = list(class, pi[ordem], lambda[ordem], LF_new, count, p)
+      names(saida) = c("classification" ,"pi_hat", "lambda_hat", 
+                       "logLik", "EM-interactions", "plot")
     }else{
-      saida = list(class, pi[ordem], lambda[ordem], count)
-      names(saida) = c("classification" ,"pi_hat", "lambda_hat", "EM-interactions")
+      saida = list(class, pi[ordem], lambda[ordem], LF_new, count)
+      names(saida) = c("classification" ,"pi_hat", "lambda_hat",
+                       "logLik", "EM-interactions")
     }
     return(saida)
   }

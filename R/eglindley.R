@@ -37,6 +37,7 @@ eglindley = function(data, plot.it = TRUE, empirical = FALSE,
     alpha = b$par[1]
     beta = b$par[2]
     gamma = b$par[3]
+    LF = -b$value
     
     if(alpha >= 1){
       modal = max(dglindley(c((alpha-1)*beta, (alpha)*beta), alpha, beta,
@@ -82,11 +83,11 @@ eglindley = function(data, plot.it = TRUE, empirical = FALSE,
     }
     ordem = order(alpha)
     if(plot.it){
-      output = list(alpha[ordem], beta[ordem], gamma[ordem], p)
-      names(output) = c("alpha_hat", "beta_hat", "gamma_hat", "plot")}
+      output = list(alpha[ordem], beta[ordem], gamma[ordem], LF, p)
+      names(output) = c("alpha_hat", "beta_hat", "gamma_hat", "logLik", "plot")}
     else{
-      output = list(alpha[ordem], beta[ordem], gamma[ordem])
-      names(output) = c("alpha_hat", "beta_hat", "gamma_hat")
+      output = list(alpha[ordem], beta[ordem], gamma[ordem], LF)
+      names(output) = c("alpha_hat", "beta_hat", "gamma_hat", "logLik")
     }
     return(output)
   }
