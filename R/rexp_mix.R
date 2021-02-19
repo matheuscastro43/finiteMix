@@ -12,6 +12,8 @@ rexp_mix <- function(n, pi, rate, plot.it = TRUE, empirical = FALSE, col.pop = "
     }
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
+      modal = max(hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
+        breaks = d.breaks}, ...)$density)
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",

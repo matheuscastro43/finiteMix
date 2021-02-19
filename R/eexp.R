@@ -9,11 +9,9 @@ eexp = function(data, plot.it = TRUE, empirical = FALSE,
     lv = sum(log(dexp(data, lambda)))
     
     if(plot.it == TRUE){
-      modal = dexp(0.1, lambda)
       d.breaks = ceiling(nclass.Sturges(data)*2.5)
-      modal = min(c(1, max(modal, hist(data, if(any(names(list(...)) ==
-                                                    "breaks") == FALSE){
-        breaks = d.breaks}, ...)$density)))
+      modal = max(hist(data, if(any(names(list(...)) == "breaks") == FALSE){
+        breaks = d.breaks}, ...)$density)
       hist(data, freq = F,border = "gray48",
            main = "Sampling distribution of X", xlab = "x",
            ylab = "Density",

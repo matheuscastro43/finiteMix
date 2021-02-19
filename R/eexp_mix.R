@@ -63,7 +63,9 @@ eexp_mix <- function(data, g, lim.em = 100, criteria = "dif.psi",
       }
     }
     if(plot.it == TRUE){
-      d.breaks <- ceiling(nclass.Sturges(data)*2.5)
+      d.breaks = ceiling(nclass.Sturges(data)*2.5)
+      modal = max(hist(data, if(any(names(list(...)) == "breaks") == FALSE){
+        breaks = d.breaks}, ...)$density)
       hist(data,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",

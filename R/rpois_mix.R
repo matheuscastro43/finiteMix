@@ -12,15 +12,20 @@ rpois_mix = function(n, pi, lambda, plot.it = TRUE, empirical = FALSE, col.pop =
     }
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
+      modal = max(max(dpois_mix(floor(lambda), pi, lambda)),
+                  hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
+        breaks = d.breaks}, ...)$density)
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density", lwd = 2,
+           ylim = c(0, modal),
            if(any(names(list(...)) == "breaks") == FALSE){breaks = d.breaks}, ...)
       pop = function(x){dpois_mix(x, pi, lambda)}
       x0 <- min(sample)
       x1 <- max(sample)
       par(new = T)
-      plot(x0:x1, lapply(x0:x1, pop), type = "h", col = col.pop, lwd = 1, main = "", xlab = "",
+      plot(x0:x1, lapply(x0:x1, pop), type = "h", col = col.pop, lwd = 3,
+           main = "", xlab = "",
            ylab = "", axes = F)
       if(empirical){
         lines(density(sample), col = col.empirical, lwd = 2)
