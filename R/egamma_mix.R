@@ -1,6 +1,6 @@
 egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it = 
-                           TRUE, empirical = FALSE, col.estimated = "orange", 
-                         col.empirical = "navy", ...){
+                        TRUE, empirical = FALSE, col.estimated = "orange", 
+                      col.empirical = "navy", ...){
   if((is.numeric(data) || is.numeric(data$sample)) && g == floor(g) && g > 1 &&
      is.logical(plot.it) && is.logical(empirical) &&
      (criteria == "dif.lh" || criteria == "dif.psi")){
@@ -49,7 +49,7 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
           Wij[i,j] <- as.numeric((pi[j]*dgamma(data[i], shape = alphas[j],
                                                scale = betas[j]))/
                                    sum((pi * dgamma(data[i], shape = alphas, 
-                                                       scale = betas))))
+                                                    scale = betas))))
         }
       }
       Wj <- colSums(Wij)
@@ -63,7 +63,7 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
           aux = 0
           for(i in 1:n){
             aux = aux + Wij[i,j] * log(pi[j] * dgamma(data[i], alphast[j],
-                                                         scale = betast[j]))
+                                                      scale = betast[j]))
           }
           return(aux)
         }
@@ -128,7 +128,7 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
     for(i in 1:g){
       if(alphas[i] >= 1){
         modal[i] = max(dgamma(c((alphas[i]-1)*betas[i], (alphas[i])*
-                                     betas[i]), alphas[i], scale = betas[i]))
+                                  betas[i]), alphas[i], scale = betas[i]))
       }else{
         U = modal[i] = 30
         while(modal[i] >= 0.9 * U){
@@ -137,8 +137,8 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
                               interval = c(0, U), maximum = T)$maximum
           U = 2 * U
         }
+        modal[i] = dgamma_mix(modal[i], pi, alphas, betas)
       }
-      modal[i] = dgamma_mix(modal[i], pi, alphas, betas)
       if(modal[i] > 10* dgamma_mix(1, pi, alphas, betas)){
         modal[i] = dgamma_mix(1, pi, alphas, betas)
       }
