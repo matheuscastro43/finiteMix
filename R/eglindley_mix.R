@@ -107,7 +107,7 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       LF_new = sum(as.numeric(lapply(1:g, L)))
       if(criteria == "dif.lh"){
         crit = LF_new - LF
-        if((abs(crit) < 1*10^(-4))){cat("\n"); break}
+        if((abs(crit) < 1*10^(-5))){cat("\n"); break}
         LF <- LF_new
       }
       else{
@@ -122,7 +122,7 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
           psi <- matrix(c(pi, alphas, betas, gammas), 4, byrow = T)
           next
         }
-        if(crit < 1*10^(-4)) {cat("\n"); break}
+        if(crit < 1*10^(-5)) {cat("\n"); break}
         psi = psi_new
       }
       count = count + 1
