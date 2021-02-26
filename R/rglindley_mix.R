@@ -25,7 +25,8 @@ rglindley_mix = function(n, pi, alpha, beta, gamma, plot.it = TRUE, empirical = 
     
     sample = NULL
     for(j in 1:g){
-      sample = c(sample, rglindley(aux[j], alpha[j], beta[j], gamma[j])$sample)
+      sample = c(sample, rglindley(aux[j], alpha[j], beta[j], gamma[j], 
+                                   plot.it = FALSE)$sample)
     }
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
