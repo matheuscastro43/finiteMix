@@ -41,6 +41,7 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       }
       Wj <- colSums(Wij)
       pi <- 1/n * Wj
+      pi = pi/sum(pi)
       medias <- as.numeric(lapply(1:g, function(j){
         aux = 0; for(i in 1:n){aux = aux + (data[i]*Wij[i,j])/(Wj[j])};
       return(aux)}))

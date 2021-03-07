@@ -41,6 +41,7 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       lambda_j <- function(j){aux = 0; for(i in 1:n){aux = aux + (data[i]*Wij[i,j])/(Wj[j])};
       return(aux)}
       pi <- 1/n * Wj
+      pi = pi/sum(pi)
       lambda <- as.numeric(lapply(1:g, lambda_j))
       psi_new <- matrix(c(pi, lambda), 2, byrow = T)
       LF_new <- sum(as.numeric(lapply(1:g, L)))

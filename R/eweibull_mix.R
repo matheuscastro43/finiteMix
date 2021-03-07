@@ -52,6 +52,7 @@ eweibull_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       }
       Wj <- colSums(Wij)
       pi <- 1/n * Wj
+      pi = pi/sum(pi)
       
       Q = function(param){
         alphast = param[(1):(g)]

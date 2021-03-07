@@ -39,6 +39,7 @@ eexp_mix <- function(data, g, lim.em = 100, criteria = "dif.psi",
       }
       Wj <- colSums(Wij)
       pi <- 1/n * Wj
+      pi = pi/sum(pi)
       for(j in 1:g){
         rate[j] <- Wj[j]/(sum(data*Wij[,j]))
       }
