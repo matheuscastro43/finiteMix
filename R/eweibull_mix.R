@@ -140,7 +140,7 @@ eweibull_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
                              pi, alphas, betas))
     
     
-    modal = max(modal, hist(data, if(any(names(list(...)) == 
+    modal = max(modal, hist(data, plot = FALSE, if(any(names(list(...)) == 
                                          "breaks") == FALSE){
       breaks = d.breaks}, ...)$density)
     hist(data, freq = F, border = "gray48",

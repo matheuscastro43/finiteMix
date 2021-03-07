@@ -12,7 +12,7 @@ enorm = function(data, plot.it = TRUE, empirical = FALSE,
     if(plot.it == TRUE){
       modal = dnorm(medias, medias, dps)
       d.breaks = ceiling(nclass.Sturges(data)*2.5)
-      modal = min(c(1, max(modal, hist(data, if(any(names(list(...)) ==
+      modal = min(c(1, max(modal, hist(data, plot = FALSE, if(any(names(list(...)) ==
                                                     "breaks") == FALSE){
         breaks = d.breaks}, ...)$density)))
       hist(data, freq = F,border = "gray48",

@@ -143,7 +143,7 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
         modal[i] = dgamma_mix(1, pi, alphas, betas)
       }
     }
-    modal = min(c(1, max(modal, hist(data, if(any(names(list(...)) == 
+    modal = min(c(1, max(modal, hist(data, plot = FALSE, if(any(names(list(...)) == 
                                                   "breaks") == FALSE){
       breaks = d.breaks}, ...)$density)))
     hist(data, freq = F, border = "gray48",

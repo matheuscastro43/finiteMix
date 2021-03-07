@@ -11,7 +11,7 @@ epois = function(data, plot.it = TRUE, empirical = FALSE,
     if(plot.it == TRUE){
       d.breaks <- ceiling(nclass.Sturges(data)*2.5)
       modal = max(max(dpois(floor(lambda), lambda)),
-                  hist(data, if(any(names(list(...)) == "breaks") == FALSE){
+                  hist(data, plot = FALSE, if(any(names(list(...)) == "breaks") == FALSE){
                     breaks = d.breaks}, ...)$density)
       hist(data, freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
