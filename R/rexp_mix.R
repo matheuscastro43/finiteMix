@@ -2,17 +2,18 @@ rexp_mix <- function(n, pi, rate, plot.it = TRUE, empirical = FALSE, col.pop = "
                      col.empirical = "navy", ...){
   g <- length(pi)
   if(n == floor(n) && sum(pi) == 1 && min(c(pi, rate, n)) > 0 && length(rate) == g){
-
+    
     z <- rmultinom(n, 1, pi)
     aux <- rowSums(z)
-
+    
     sample <- NULL
     for(j in 1:g){
       sample <- c(sample, rexp(aux[j], rate[j]))
     }
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-      modal = max(hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
+      modal = max(hist(sample, plot = FALSE, if(any(names(list(...)) ==
+                                                    "breaks") == FALSE){
         breaks = d.breaks}, ...)$density)
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",

@@ -2,10 +2,10 @@ rpois_mix = function(n, pi, lambda, plot.it = TRUE, empirical = FALSE, col.pop =
                      col.empirical = "navy", ...){
   g = length(pi)
   if(n == floor(n) && sum(pi) == 1 && min(c(pi, lambda, n)) > 0 && length(lambda) == g){
-
+    
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
-
+    
     sample = NULL
     for(j in 1:g){
       sample = c(sample, rpois(aux[j], lambda = lambda[j]))
@@ -13,8 +13,9 @@ rpois_mix = function(n, pi, lambda, plot.it = TRUE, empirical = FALSE, col.pop =
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
       modal = max(max(dpois_mix(floor(lambda), pi, lambda)),
-                  hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
-        breaks = d.breaks}, ...)$density)
+                  hist(sample, plot = FALSE, 
+                       if(any(names(list(...)) == "breaks") == FALSE){
+                         breaks = d.breaks}, ...)$density)
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density", lwd = 2,

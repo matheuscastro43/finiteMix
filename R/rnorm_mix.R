@@ -2,19 +2,21 @@ rnorm_mix = function(n, pi, mean, sd, plot.it = TRUE, empirical = FALSE, col.pop
                      col.empirical = "navy", ...){
   g <- length(pi)
   if(n == floor(n) && sum(pi) == 1 && min(c(pi, sd, n)) > 0 && length(mean) == g && length(sd) == g){
-
+    
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)
     modal <- max(dnorm_mix(mean, pi, mean, sd))
-
+    
     sample = NULL
     for(j in 1:g){
       sample = c(sample, rnorm(aux[j], mean = mean[j], sd = sd[j]))
     }
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-      modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
-        breaks = d.breaks}, ...)$density)))
+      modal = min(c(1, max(modal, hist(sample, plot = FALSE, 
+                                       if(any(names(list(...)) == 
+                                              "breaks") == FALSE){
+                                         breaks = d.breaks}, ...)$density)))
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",
@@ -37,13 +39,13 @@ rnorm_mix = function(n, pi, mean, sd, plot.it = TRUE, empirical = FALSE, col.pop
     sample <- cbind(sample, rep(1:g, aux))
     sample <- sample[ord,]
     if(plot.it){
-    output = list(sample[,1], g, pi, mean, sd, sample[,2], p)
-    names(output) = c("sample", "g", "pi", "mu", "sigma", "classification", "plot")
+      output = list(sample[,1], g, pi, mean, sd, sample[,2], p)
+      names(output) = c("sample", "g", "pi", "mu", "sigma", "classification", "plot")
     }
     else{
       output = list(sample[,1], g, pi, mean, sd, sample[,2])
       names(output) = c("sample", "g", "pi", "mu", "sigma", "classification")
     }
     return(output)
-    }else stop("The parametric space must be respected.")
+  }else stop("The parametric space must be respected.")
 }

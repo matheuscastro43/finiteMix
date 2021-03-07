@@ -75,7 +75,7 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
         break
       }
     }
-    if(plot.it == TRUE){
+    if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(data)*2.5)
       modal <- max(dnorm_mix(medias, pi, medias, dps))
       hist(data,freq = F,border = "gray48",

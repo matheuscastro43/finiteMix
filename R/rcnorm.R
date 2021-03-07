@@ -1,5 +1,5 @@
 rcnorm = function(n, pi, mean, sd, gamma, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
-                     col.empirical = "navy", ...){
+                  col.empirical = "navy", ...){
   if(n == floor(n) && sum(pi) == 1 && length(pi) == 2 && length(mean) == 1 && length(sd) == 1 &&
      length(gamma) == 1 && min(c(pi, sd, gamma, n)) > 0){
     
@@ -7,13 +7,15 @@ rcnorm = function(n, pi, mean, sd, gamma, plot.it = TRUE, empirical = FALSE, col
     aux = rowSums(z)
     modal = max(dcnorm(mean, pi, mean, sd, gamma))
     
-      sample = c(rnorm(aux[1], mean, sd = sd/sqrt(gamma)),
-                 rnorm(aux[2], mean, sd = sd))
-      
+    sample = c(rnorm(aux[1], mean, sd = sd/sqrt(gamma)),
+               rnorm(aux[2], mean, sd = sd))
+    
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-      modal = min(c(1, max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
-        breaks = d.breaks}, ...)$density)))
+      modal = min(c(1, max(modal, hist(sample, plot = FALSE,
+                                       if(any(names(list(...)) == "breaks") == 
+                                          FALSE){
+                                         breaks = d.breaks}, ...)$density)))
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",

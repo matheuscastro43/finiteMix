@@ -7,15 +7,15 @@ rbetar = function(n, pi, mu, phi, plot.it = TRUE, empirical = FALSE, col.pop = "
     aux = rowSums(z)
     modal = dbetar(optimize(function(x) dbetar(x, pi, mu, phi),
                             interval= c(.1,1), maximum = T)$maximum, pi, mu, phi)
-    print(modal)
     
     sample = c(runif(aux[1]), 
                rbeta(aux[2], mu*phi, (1-mu)*phi + 1))
     
     if(plot.it){
       d.breaks <- ceiling(nclass.Sturges(sample)*2.5)
-      modal = max(modal, hist(sample, if(any(names(list(...)) == "breaks") == FALSE){
-        breaks = d.breaks}, ...)$density)
+      modal = max(modal, hist(sample, plot = FALSE, 
+                              if(any(names(list(...)) == "breaks") == FALSE){
+                                breaks = d.breaks}, ...)$density)
       hist(sample,freq = F,border = "gray48",
            main = "Sampling distribution of X",xlab = "x",
            ylab = "Density",
