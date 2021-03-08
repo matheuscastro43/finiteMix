@@ -15,7 +15,7 @@ elindley_mix(data, g, lim.em = 100, criteria = "dif.psi", plot.it = TRUE,
 \arguments{
 \item{data}{ vector containing the sample, or list obtained with \link[finiteMix]{rlindley_mix}.}
 \item{g}{ number of components in the mixture.}
-\item{lim.em}{ limit of EM iteractions.}
+\item{lim.em}{ limit of EM Iterations.}
 \item{criteria}{ the stop criteria to be used, could be "dif.psi" to calculate differences on
 parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
 \item{plot.it}{ logical, TRUE to plot the histogram with estimated distribution curve.}
