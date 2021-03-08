@@ -28,7 +28,7 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
           cat('\n')
       }
       if(count == 0)
-        cat("Limit of EM Interactions (", lim.em ,"): \n", sep = "")
+        cat("Limit of EM Iterations (", lim.em ,"): \n", sep = "")
       progress(count)
       Wij <- matrix(0, nrow = n, ncol = g)
       for(i in 1:n){
@@ -108,11 +108,11 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       output = list(class, pi[ordem], medias[ordem], dps[ordem], LF_new, 
                     count, p)
       names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat",
-                        "logLik", "EM-interactions", "plot")}
+                        "logLik", "EM-iterations", "plot")}
     else{
       output = list(class, pi[ordem], medias[ordem], dps[ordem], LF_new, count)
       names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat",
-                        "logLik", "EM-interactions")
+                        "logLik", "EM-iterations")
     }
     return(output)
   }

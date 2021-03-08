@@ -43,7 +43,7 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
           cat('\n')
       }
       if(count == 0)
-        cat("Limit of EM Interactions (", lim.em ,"): \n", sep = "")
+        cat("Limit of EM Iterations (", lim.em ,"): \n", sep = "")
       progress(count)
       Wij = matrix(0, nrow = n, ncol = g)
       for(i in 1:n){
@@ -186,12 +186,12 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
     output = list(class, pi[ordem], alphas[ordem], betas[ordem], gammas[ordem],
                   LF_new, count, p)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat", 
-                      "gamma_hat", "logLik", "EM-interactions", "plot")}
+                      "gamma_hat", "logLik", "EM-iterations", "plot")}
   else{
     output = list(class, pi[ordem], alphas[ordem], betas[ordem], gammas[ordem],
                   LF_new, count)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat",
-                      "gamma_hat", "logLik", "EM-interactions")
+                      "gamma_hat", "logLik", "EM-iterations")
   }
   return(output)
 }
