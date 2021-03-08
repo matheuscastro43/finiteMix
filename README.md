@@ -188,6 +188,7 @@ estimating = eglindley_mix(generating, g = 2, lim.em = 100)
 
 
 ### Inside finiteMix package, the same functions presented above can be used in mixture models of distributions:
+* Beta Rectangular
 * Contaminated Normal
 * Exponential
 * Gama
@@ -195,5 +196,4 @@ estimating = eglindley_mix(generating, g = 2, lim.em = 100)
 * Lindley
 * Normal
 * Poisson
-* Rectangular Beta
 * Weibull
