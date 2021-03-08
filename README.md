@@ -1,4 +1,4 @@
-# Demonstration of package finiteMix
+# Demonstration of package finiteMix:
 
 ## This notebook demonstrates many finiteMix features.
 
