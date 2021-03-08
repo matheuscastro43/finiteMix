@@ -7,6 +7,8 @@ eexp = function(data, plot.it = TRUE, empirical = FALSE,
     lambda = 1/mean(data)
     
     lv = sum(dexp(data, lambda, log = TRUE))
+    aic = 2 - 2*lv
+    bic = log(n) - 2*lv
     
     if(plot.it){
       d.breaks = ceiling(nclass.Sturges(data)*2.5)
@@ -36,11 +38,11 @@ eexp = function(data, plot.it = TRUE, empirical = FALSE,
       p <- recordPlot()
     }
     if(plot.it){
-      output = list(lambda, lv, p)
-      names(output) = c("lambda_hat", "logLik", "plot")}
+      output = list(lambda, lv, aic, bic, p)
+      names(output) = c("lambda_hat", "logLik", "AIC", "BIC", "plot")}
     else{
-      output = list(lambda, lv)
-      names(output) = c("lambda_hat", "logLik")
+      output = list(lambda, lv, aic, bic)
+      names(output) = c("lambda_hat", "logLik", "AIC", "BIC")
     }
     return(output)
   }

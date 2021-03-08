@@ -39,6 +39,8 @@ eweibull = function(data, plot.it = TRUE, empirical = FALSE,
     alpha = b$par[1]
     beta = b$par[2]
     LF = -b$value
+    aic = 4 - 2*LF
+    bic = 2*log(n) - 2*LF
     
     if(alpha >= 1){
       modal = dweibull(beta * ((alpha - 1)/alpha)^(1/beta), alpha, beta)
@@ -74,11 +76,11 @@ eweibull = function(data, plot.it = TRUE, empirical = FALSE,
     }
     ordem = order(alpha)
     if(plot.it){
-      output = list(alpha[ordem], beta[ordem], LF, p)
-      names(output) = c("alpha_hat", "beta_hat", "logLik", "plot")}
+      output = list(alpha[ordem], beta[ordem], LF, aic, bic, p)
+      names(output) = c("alpha_hat", "beta_hat", "logLik", "AIC", "BIC", "plot")}
     else{
-      output = list(alpha[ordem], beta[ordem], LF)
-      names(output) = c("alpha_hat", "beta_hat", "logLik")
+      output = list(alpha[ordem], beta[ordem], LF, aic, bic)
+      names(output) = c("alpha_hat", "beta_hat", "logLik", "AIC", "BIC")
     }
     return(output)
   }

@@ -8,6 +8,8 @@ enorm = function(data, plot.it = TRUE, empirical = FALSE,
     dps = sd(data)
     
     lv = sum(dnorm(data, medias, dps, log = TRUE))
+    aic = 4 - 2*lv
+    bic = 2*log(n) - 2*lv
     
     if(plot.it == TRUE){
       modal = dnorm(medias, medias, dps)
@@ -39,11 +41,11 @@ enorm = function(data, plot.it = TRUE, empirical = FALSE,
       p <- recordPlot()
     }
     if(plot.it){
-      output = list(medias, dps, lv, p)
-      names(output) = c("mu_hat", "sigma_hat", "logLik", "plot")}
+      output = list(medias, dps, lv, aic, bic, p)
+      names(output) = c("mu_hat", "sigma_hat", "logLik", "AIC", "BIC", "plot")}
     else{
-      output = list(medias, dps, lv)
-      names(output) = c("mu_hat", "sigma_hat", "logLik")
+      output = list(medias, dps, lv, aic, bic)
+      names(output) = c("mu_hat", "sigma_hat", "logLik", "AIC", "BIC")
     }
     return(output)
   }
