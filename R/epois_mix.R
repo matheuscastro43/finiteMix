@@ -71,6 +71,9 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
         break
       }
     }
+    p = prod(dim(matrix(0, 2, 2))) - 1
+    aic = 2*p - 2*LF_new
+    bic = p*log(n) - 2*LF_new
     if(plot.it == TRUE){
       d.breaks <- ceiling(nclass.Sturges(data)*2.5)
       modal = max(max(dpois_mix(floor(lambda), pi, lambda)),
@@ -102,13 +105,13 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
     ordem = order(medias)
     class = kmeans(data, centers = lambda[ordem])$cluster
     if(plot.it){
-      saida = list(class, pi[ordem], lambda[ordem], LF_new, count, p)
+      saida = list(class, pi[ordem], lambda[ordem], LF_new, aic, bic, count, p)
       names(saida) = c("classification" ,"pi_hat", "lambda_hat", 
-                       "logLik", "EM-iterations", "plot")
+                       "logLik", "AIC", "BIC", "EM-iterations", "plot")
     }else{
-      saida = list(class, pi[ordem], lambda[ordem], LF_new, count)
+      saida = list(class, pi[ordem], lambda[ordem], LF_new, aic, bic, count)
       names(saida) = c("classification" ,"pi_hat", "lambda_hat",
-                       "logLik", "EM-iterations")
+                       "logLik", "AIC", "BIC", "EM-iterations")
     }
     return(saida)
   }

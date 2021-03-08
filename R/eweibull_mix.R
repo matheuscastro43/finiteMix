@@ -134,6 +134,9 @@ eweibull_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       }
     }
   }
+  p = prod(dim(matrix(0, 2, 2))) - 1
+  aic = 2*p - 2*LF_new
+  bic = p*log(n) - 2*LF_new
   if(plot.it == TRUE){
     d.breaks = ceiling(nclass.Sturges(data)*2.5)
     modal = max(dweibull_mix(c(0.1, 
@@ -170,14 +173,14 @@ eweibull_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
   class = kmeans(data, centers = medias[ordem])$cluster
   if(plot.it){
     output = list(class, pi[ordem], alphas[ordem], betas[ordem], 
-                  LF_new, count, p)
+                  LF_new, aic, bic, count, p)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat", 
-                      "logLik", "EM-iterations", "plot")}
+                      "logLik", "AIC", "BIC", "EM-iterations", "plot")}
   else{
     output = list(class, pi[ordem], alphas[ordem], betas[ordem],
-                  LF_new, count)
+                  LF_new, aic, bic, count)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat",
-                      "logLik", "EM-iterations")
+                      "logLik", "AIC", "BIC", "EM-iterations")
   }
   return(output)
 }
