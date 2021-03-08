@@ -15,9 +15,9 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
     lambda <- apply(rbind(medias, variancias), 2, mean)
     psi <- matrix(c(pi, lambda), 2, byrow = T)
     
-    L <- function(I){ sum ( log(pi[I] * dpois(data[which(k$cluster == I)],
-                                              lambda = lambda[I]) ) ) }
-    LF <- sum(as.numeric(lapply(1:g, L))); count = 0
+    count = 0
+    L <- function(i){dpois_mix(data[i], pi, lambda, log = TRUE)}
+    LF <- sum(sapply(1:n, L))
     while(T){
       progress <- function (x, max = lim.em) {
         percent <- x / max * 100
@@ -44,7 +44,7 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       pi = pi/sum(pi)
       lambda <- as.numeric(lapply(1:g, lambda_j))
       psi_new <- matrix(c(pi, lambda), 2, byrow = T)
-      LF_new <- sum(as.numeric(lapply(1:g, L)))
+      LF_new <- sum(sapply(1:n, L))
       if(criteria == "dif.lh"){
         crit <- LF_new - LF
         if((abs(crit) < 1*10^(-5))){cat("\n"); break}

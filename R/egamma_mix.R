@@ -27,10 +27,8 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
     betas = psi[3,]
     
     count = 0
-    L = function(I){sum(log(pi[I] * dgamma(data[which(k$cluster == I)],
-                                           shape = alphas[I],
-                                           scale = betas[I])))}
-    LF = sum(as.numeric(lapply(1:g, L))); count = 0
+    L = function(i){dgamma_mix(data[i], pi, alphas, betas, log = TRUE)}
+    LF = sum(sapply(1:n, L))
     while(T){
       progress <- function (x, max = lim.em) {
         percent <- x / max * 100
@@ -95,7 +93,7 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       betas = estim$par[(g + 1):(2*g)]
       
       psi_new = matrix(c(pi, alphas, betas), 3, byrow = T)
-      LF_new = sum(as.numeric(lapply(1:g, L)))
+      LF_new = sum(sapply(1:n, L))
       if(criteria == "dif.lh"){
         crit = LF_new - LF
         if((abs(crit) < 1*10^(-5))){cat("\n"); break}

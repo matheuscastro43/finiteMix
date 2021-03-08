@@ -7,7 +7,7 @@ enorm = function(data, plot.it = TRUE, empirical = FALSE,
     medias = mean(data)
     dps = sd(data)
     
-    lv = sum(log(dnorm(data, medias, dps)))
+    lv = sum(dnorm(data, medias, dps, log = TRUE))
     
     if(plot.it == TRUE){
       modal = dnorm(medias, medias, dps)

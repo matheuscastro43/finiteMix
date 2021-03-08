@@ -15,9 +15,8 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
     psi <- matrix(c(pi, medias, dps), 3, byrow = T)
     
     count = 0
-    L <- function(I){ sum ( log(pi[I] * dnorm(data[which(k$cluster == I)], 
-                                              mean = medias[I], sd = dps[I])))}
-    LF <- sum(as.numeric(lapply(1:g, L))); count = 0
+    L <- function(i){dnorm_mix(data[i], pi, medias, dps, log = TRUE)}
+    LF <- sum(sapply(1:n, L))
     while(T){
       progress <- function (x, max = lim.em) {
         percent <- x / max * 100
@@ -50,7 +49,7 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
           aux = aux + ((data[i]-medias[j])^2*Wij[i,j])/(Wj[j])};
       return(aux)})))
       psi_new <- matrix(c(pi, medias, dps), 3, byrow = T)
-      LF_new <- sum(as.numeric(lapply(1:g, L)))
+      LF_new <- sum(sapply(1:n, L))
       if(criteria == "dif.lh"){
         crit <- LF_new - LF
         if((abs(crit) < 1*10^(-5))){cat("\n"); break}

@@ -27,9 +27,9 @@ eglindley = function(data, plot.it = TRUE, empirical = FALSE,
       beta = Psi[2]
       gamma = Psi[3]
       -c(sum(log(x)) + sum(1/(alpha + gamma * x)) - n * log(beta) - n * 
-                                 digamma(alpha + 1),
-             sum(x)/beta^2 - n*alpha/beta - n * gamma/(beta * gamma + 1),
-             sum(x/(alpha + gamma * x)) - n * beta/(beta*gamma + 1))
+           digamma(alpha + 1),
+         sum(x)/beta^2 - n*alpha/beta - n * gamma/(beta * gamma + 1),
+         sum(x/(alpha + gamma * x)) - n * beta/(beta*gamma + 1))
     }
     b = optim(par = c(alphas, betas, gammas), fn = LV, lower = c(1e-04, 1e-04, 1e-04), 
               upper = c(Inf, Inf, Inf), method = "L-BFGS-B", x = data, gr = grr)
@@ -57,8 +57,10 @@ eglindley = function(data, plot.it = TRUE, empirical = FALSE,
     
     if(plot.it == TRUE){
       d.breaks = ceiling(nclass.Sturges(data)*2.5)
-      modal = min(c(1, max(modal, hist(data, plot = FALSE, if(any(names(list(...)) == "breaks") == FALSE){
-        breaks = d.breaks}, ...)$density)))
+      modal = min(c(1, max(modal, hist(data, plot = FALSE, 
+                                       if(any(names(list(...)) == "breaks") ==
+                                          FALSE){
+                                         breaks = d.breaks}, ...)$density)))
       hist(data,freq = F,border = "gray48",
            main = "Sampling distribution of X", xlab = "x",
            ylab = "Density",

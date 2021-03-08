@@ -28,11 +28,8 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
     betas = psi[3,]
     gammas = psi[4,]
 
-    L = function(I){ sum ( log(pi[I] * dglindley(data[which(k$cluster == I)], 
-                                                 alpha = alphas[I], 
-                                                 beta = betas[I],
-                                                 gamma = gammas[I])))}
-    LF = sum(as.numeric(lapply(1:g, L))); count = 0
+    L = function(i){dglindley_mix(data[i], pi, alphas, betas, gammas, log = TRUE)}
+    LF = sum(sapply(1:n, L)); count = 0
     while(T){
       progress <- function (x, max = lim.em) {
         percent <- x / max * 100
@@ -105,7 +102,7 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       gammas = estim$par[(2*g + 1):(3*g)]
       
       psi_new = matrix(c(pi, alphas, betas, gammas), 4, byrow = T)
-      LF_new = sum(as.numeric(lapply(1:g, L)))
+      LF_new = sum(sapply(1:n, L))
       if(criteria == "dif.lh"){
         crit = LF_new - LF
         if((abs(crit) < 1*10^(-5))){cat("\n"); break}

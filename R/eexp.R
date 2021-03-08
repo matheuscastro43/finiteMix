@@ -6,13 +6,13 @@ eexp = function(data, plot.it = TRUE, empirical = FALSE,
     
     lambda = 1/mean(data)
     
-    lv = sum(log(dexp(data, lambda)))
+    lv = sum(dexp(data, lambda, log = TRUE))
     
-    if(plot.it == TRUE){
+    if(plot.it){
       d.breaks = ceiling(nclass.Sturges(data)*2.5)
       modal = max(hist(data, plot = FALSE, if(any(names(list(...)) == "breaks") == FALSE){
         breaks = d.breaks}, ...)$density)
-      hist(data, freq = F,border = "gray48",
+      hist(data, freq = F, border = "gray48",
            main = "Sampling distribution of X", xlab = "x",
            ylab = "Density",
            ylim = c(0, modal),

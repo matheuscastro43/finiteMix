@@ -14,8 +14,8 @@ eexp_mix <- function(data, g, lim.em = 100, criteria = "dif.psi",
     rate <- (tapply(data, k$cluster, mean))^(-1)
     psi <- matrix(c(pi, rate), 2, byrow = T)
 
-    L <- function(I) {sum(log(pi[I] * dexp(data[k$cluster == I], rate[I])))}
-    LF <- sum(as.numeric(lapply(1:g, L)))
+    L <- function(i){dexp_mix(data[i], pi, rate, log = TRUE)}
+    LF <- sum(sapply(1:n, L))
 
     count = 0
     while(T){
@@ -44,7 +44,7 @@ eexp_mix <- function(data, g, lim.em = 100, criteria = "dif.psi",
         rate[j] <- Wj[j]/(sum(data*Wij[,j]))
       }
       psi_new <- matrix(c(pi, rate), 2, byrow = T)
-      LF_new <- sum(as.numeric(lapply(1:g, L)))
+      LF_new <- sum(sapply(1:n, L))
       
       if(criteria == "dif.lh"){
         crit <- LF_new - LF

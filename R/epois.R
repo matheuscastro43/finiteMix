@@ -6,7 +6,7 @@ epois = function(data, plot.it = TRUE, empirical = FALSE,
     
     lambda = mean(data)
     
-    lv = sum(log(dpois(data, lambda)))
+    lv = sum(dpois(data, lambda, log = TRUE))
     
     if(plot.it == TRUE){
       d.breaks <- ceiling(nclass.Sturges(data)*2.5)

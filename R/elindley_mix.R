@@ -24,9 +24,9 @@ elindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
     }
     betas = psi[2,]
     
-    L = function(I){sum(log(pi[I] * dlindley(data[which(k$cluster == I)], 
-                                             beta = betas[I])))}
-    LF = sum(as.numeric(lapply(1:g, L))); count = 0
+    count = 0
+    L = function(i){dlindley_mix(data[i], pi, betas, log = TRUE)}
+    LF = sum(sapply(1:n, L));
     while(T){
       progress <- function (x, max = lim.em) {
         percent <- x / max * 100
@@ -81,7 +81,7 @@ elindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       betas = estim$par
       
       psi_new = matrix(c(pi, betas), 2, byrow = T)
-      LF_new = sum(sapply(1:g, L))
+      LF_new = sum(sapply(1:n, L))
       if(criteria == "dif.lh"){
         crit = LF_new - LF
         if((abs(crit) < 1*10^(-5))){cat("\n"); break}
