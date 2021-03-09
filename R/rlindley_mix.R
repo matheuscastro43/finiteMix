@@ -1,7 +1,8 @@
 rlindley_mix = function(n, pi, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                         col.empirical = "navy", ...){
   g <- length(pi)
-  if(n == floor(n) && sum(pi) == 1 && min(c(pi, beta, n)) > 0 && length(beta) == g){
+  pi = pi/sum(pi)
+  if(n == floor(n) && min(c(pi, beta, n)) > 0 && length(beta) == g){
     
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)

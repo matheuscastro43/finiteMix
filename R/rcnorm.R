@@ -1,6 +1,7 @@
 rcnorm = function(n, pi, mean, sd, gamma, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                   col.empirical = "navy", ...){
-  if(n == floor(n) && sum(pi) == 1 && length(pi) == 2 && length(mean) == 1 && length(sd) == 1 &&
+  pi = pi/sum(pi)
+  if(n == floor(n) && length(pi) == 2 && length(mean) == 1 && length(sd) == 1 &&
      length(gamma) == 1 && min(c(pi, sd, gamma, n)) > 0){
     
     z = rmultinom(n = n, size = 1, pi)

@@ -1,7 +1,8 @@
 rnorm_mix = function(n, pi, mean, sd, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                      col.empirical = "navy", ...){
   g <- length(pi)
-  if(n == floor(n) && sum(pi) == 1 && min(c(pi, sd, n)) > 0 && length(mean) == g && length(sd) == g){
+  pi = pi/sum(pi)
+  if(n == floor(n) && min(c(pi, sd, n)) > 0 && length(mean) == g && length(sd) == g){
     
     z = rmultinom(n = n, size = 1, pi)
     aux = rowSums(z)

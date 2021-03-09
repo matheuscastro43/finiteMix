@@ -1,7 +1,8 @@
 qweibull_mix <- function(p, pi, shape, scale, lower.tail = TRUE, log.p = FALSE){
   if(length(p) == 1){
     g <- length(pi)
-    if(sum(pi) == 1 && min(c(pi, shape, scale)) > 0 && length(shape) == g &&
+    pi = pi/sum(pi)
+    if(min(c(pi, shape, scale)) > 0 && length(shape) == g &&
        length(scale) == g){
       if(log.p){
         p = exp(p)

@@ -1,6 +1,7 @@
 rbetar = function(n, pi, mu, phi, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                   col.empirical = "navy", ...){
-  if(n == floor(n) && sum(pi) == 1 && min(c(pi, mu, phi, n)) > 0 && length(mu) == 1 && length(phi) == 1 &&
+  pi = pi/sum(pi)
+  if(n == floor(n) && min(c(pi, mu, phi, n)) > 0 && length(mu) == 1 && length(phi) == 1 &&
      length(pi) == 2 && mu < 1){
     
     z = rmultinom(n = n, size = 1, pi)

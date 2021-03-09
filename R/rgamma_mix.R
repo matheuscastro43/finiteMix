@@ -1,7 +1,8 @@
 rgamma_mix = function(n, pi, alpha, beta, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                       col.empirical = "navy", ...){
   g <- length(pi)
-  if(n == floor(n) && sum(pi) == 1 && min(c(pi, alpha, beta, n)) > 0 && length(alpha) == g && 
+  pi = pi/sum(pi)
+  if(n == floor(n) && min(c(pi, alpha, beta, n)) > 0 && length(alpha) == g && 
      length(beta) == g){
     
     z = rmultinom(n = n, size = 1, pi)

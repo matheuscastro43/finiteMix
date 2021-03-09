@@ -1,7 +1,8 @@
 dnorm_mix <- function(x, pi, mean, sd, log = FALSE){
   if(length(x) == 1){
     g = length(pi)
-    if(sum(pi) == 1 && min(c(pi, sd)) > 0 && length(mean) == g && length(sd) == g){
+    pi = pi/sum(pi)
+    if( min(c(pi, sd)) > 0 && length(mean) == g && length(sd) == g){
       aux = 0
       for(j in 1:g){aux = aux + pi[j]*dnorm(x,mean=mean[j], sd = sd[j])}
       if(!log){

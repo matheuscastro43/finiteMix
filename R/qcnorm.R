@@ -1,6 +1,7 @@
 qcnorm <- function(p, pi, mean, sd, gamma, lower.tail = TRUE, log.p = FALSE){
   if(length(p) == 1){
-    if(sum(pi) == 1 && min(c(pi, sd, gamma)) > 0 && length(mean) == 1 &&
+    pi = pi/sum(pi)
+    if(min(c(pi, sd, gamma)) > 0 && length(mean) == 1 &&
        length(sd) == 1 && length(gamma) == 1 && length(pi) == 2){
       if(log.p){
         p = exp(p)

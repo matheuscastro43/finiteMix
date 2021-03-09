@@ -1,7 +1,8 @@
 rweibull_mix <- function(n, pi, shape, scale, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                          col.empirical = "navy", ...){
   g <- length(pi)
-  if(n == floor(n) && sum(pi) == 1 && min(c(pi, shape, scale, n)) > 0 && length(shape) == g && 
+  pi = pi/sum(pi)
+  if(n == floor(n) && min(c(pi, shape, scale, n)) > 0 && length(shape) == g && 
      length(scale) == g){
     
     z <- rmultinom(n, 1, pi)

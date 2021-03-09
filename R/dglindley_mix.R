@@ -1,7 +1,8 @@
 dglindley_mix <- function(x, pi, alpha, beta, gamma, log = FALSE){
   if(length(x) == 1){
     g = length(pi)
-    if(sum(pi) == 1 && min(c(pi, alpha, beta, gamma)) > 0 
+    pi = pi/sum(pi)
+    if(min(c(pi, alpha, beta, gamma)) > 0 
        && length(alpha) == g && length(beta) == g && length(gamma) == g){
       aux = 0
       if(x >= 0){

@@ -1,7 +1,8 @@
 qpois_mix <- function(p, pi, lambda, lower.tail = TRUE, log.p = FALSE){
   if(length(p) == 1){
     g = length(pi)
-    if(sum(pi) == 1 && min(c(pi, lambda)) > 0 && length(lambda) == g){
+    pi = pi/sum(pi)
+    if(min(c(pi, lambda)) > 0 && length(lambda) == g){
       if(log.p){
         p = exp(p)
       }

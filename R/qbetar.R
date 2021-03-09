@@ -1,6 +1,7 @@
 qbetar <- function(p, pi, mu, phi, lower.tail = TRUE, log.p = FALSE){
   if(length(p) == 1){
-    if(sum(pi) == 1 && min(c(pi, mu, phi)) > 0 && length(mu) == 1 && length(phi) == 1 &&
+    pi = pi/sum(pi)
+    if(min(c(pi, mu, phi)) > 0 && length(mu) == 1 && length(phi) == 1 &&
        length(pi) == 2 && mu < 1){
       if(log.p){
         p = exp(p)

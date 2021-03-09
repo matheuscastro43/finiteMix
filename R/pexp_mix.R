@@ -1,7 +1,8 @@
 pexp_mix <- function(q, pi, rate, lower.tail = TRUE, log.p = FALSE){
   if(length(q) == 1){
     g = length(pi)
-    if(sum(pi) == 1 && min(c(pi, rate)) > 0 && length(rate) == g){
+    pi = pi/sum(pi)
+    if(min(c(pi, rate)) > 0 && length(rate) == g){
       aux = 0
       if(q > 0){
         for(j in 1:g){aux = aux + pi[j]* pexp(q, rate = rate[j])}

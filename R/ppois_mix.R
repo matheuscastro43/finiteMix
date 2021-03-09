@@ -1,7 +1,8 @@
 ppois_mix <- function(q, pi, lambda, lower.tail = TRUE, log.p = FALSE){
   if(length(q) == 1){
     g = length(pi)
-    if(sum(pi) == 1 && min(c(pi, lambda)) > 0 && length(lambda) == g){
+    pi = pi/sum(pi)
+    if(min(c(pi, lambda)) > 0 && length(lambda) == g){
       aux = 0
       for(j in 1:g){aux = aux + pi[j]*ppois(q,lambda=lambda[j])}
       if(!lower.tail){

@@ -1,7 +1,8 @@
 dlindley_mix <- function(x, pi, beta, log = FALSE){
   if(length(x) == 1){
     g = length(pi)
-    if(sum(pi) == 1 && min(c(pi, beta)) > 0 && length(beta) == g){
+    pi = pi/sum(pi)
+    if(min(c(pi, beta)) > 0 && length(beta) == g){
       aux = 0
       if(x >= 0){
         for(j in 1:g){aux = aux + pi[j]*dlindley(x, beta = beta[j])}

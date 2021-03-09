@@ -1,7 +1,8 @@
 rexp_mix <- function(n, pi, rate, plot.it = TRUE, empirical = FALSE, col.pop = "red3",
                      col.empirical = "navy", ...){
   g <- length(pi)
-  if(n == floor(n) && sum(pi) == 1 && min(c(pi, rate, n)) > 0 && length(rate) == g){
+  pi = pi/sum(pi)
+  if(n == floor(n) && min(c(pi, rate, n)) > 0 && length(rate) == g){
     
     z <- rmultinom(n, 1, pi)
     aux <- rowSums(z)

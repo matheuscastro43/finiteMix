@@ -1,7 +1,8 @@
 qgamma_mix <- function(p, pi, alpha, beta, lower.tail = TRUE, log.p = FALSE){
   if(length(p) == 1){
     g <- length(pi)
-    if(sum(pi) == 1 && min(c(pi, alpha, beta)) > 0 && length(alpha) == g &&
+    pi = pi/sum(pi)
+    if(min(c(pi, alpha, beta)) > 0 && length(alpha) == g &&
        length(beta) == g){
       if(log.p){
         p = exp(p)

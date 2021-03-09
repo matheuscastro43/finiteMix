@@ -1,7 +1,8 @@
 pglindley_mix <- function(q, pi, alpha, beta, gamma, lower.tail = TRUE, log.p = FALSE){
   if(length(q) == 1){
     g = length(pi)
-    if(sum(pi) == 1 && min(c(pi, alpha, beta, gamma)) > 0 && length(alpha) == g 
+    pi = pi/sum(pi)
+    if(min(c(pi, alpha, beta, gamma)) > 0 && length(alpha) == g 
        && length(beta) == g && length(gamma) == g){
       aux = 0
       for(j in 1:g){aux = aux + pi[j]*pglindley(q, alpha[j], beta[j], gamma[j])}

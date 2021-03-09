@@ -1,7 +1,8 @@
 rglindley_mix = function(n, pi, alpha, beta, gamma, plot.it = TRUE, empirical = FALSE, 
                          col.pop = "red3", col.empirical = "navy", ...){
   g = length(pi)
-  if(n == floor(n) && sum(pi) == 1 && min(c(pi, alpha, beta, gamma, n)) > 0 
+  pi = pi/sum(pi)
+  if(n == floor(n) && min(c(pi, alpha, beta, gamma, n)) > 0 
      && length(alpha) == g && length(beta) == g && length(gamma) == g){
     
     z = rmultinom(n = n, size = 1, pi)

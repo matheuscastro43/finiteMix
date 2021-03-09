@@ -1,7 +1,8 @@
 dgamma_mix <- function(x, pi, alpha, beta, log = FALSE){
   if(length(x) == 1){
     g = length(pi)
-    if(sum(pi) == 1 && min(c(pi, alpha, beta)) > 0 && length(alpha) == g && 
+    pi = pi/sum(pi)
+    if(min(c(pi, alpha, beta)) > 0 && length(alpha) == g && 
        length(beta) == g){
       aux = 0
       if(x >= 0){
