@@ -1,5 +1,5 @@
 g.search <- function(data, g = NULL, family = NULL, lim.em = 40, plot.it = TRUE, 
-                     col.wss = "navy", col.ic = c("red", "orange"), ...){
+                     col.wss = "navy", col.ic = c("orange", "red"), ...){
   if(is.list(data)){data = data$sample}
   if(length(g) == 0 || length(g) == 1){
     if(is.null(g) || g <= 3){g = 1:3}
