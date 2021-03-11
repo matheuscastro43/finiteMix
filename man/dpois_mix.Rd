@@ -35,9 +35,9 @@ where \eqn{\lambda_j} is the mean and the variance of the jth component. j = 1, 
 %% ~put references to the literature/web site here ~
 %}
 
-%\author{
-%%  ~~who you are~~
-%}
+\author{
+CASTRO, M. O.; MONTALVO, G. S. A.}
+
 
 %\note{
 %%  ~~further notes~~

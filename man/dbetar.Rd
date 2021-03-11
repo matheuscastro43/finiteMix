@@ -35,9 +35,9 @@ The mixture has density
 %% ~put references to the literature/web site here ~
 %}
 
-%\author{
-%%  ~~who you are~~
-%}
+\author{
+CASTRO, M. O.; MONTALVO, G. S. A.}
+
 
 %\note{
 %%  ~~further notes~~

@@ -53,25 +53,31 @@ eweibull_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       Wj <- colSums(Wij)
       pi <- 1/n * Wj
       pi = pi/sum(pi)
+      if(any(is.nan(pi))){
+        medias = betas * gamma(1 + 1/alphas)
+        psi[1, ] = pi = table(kmeans(data, g, centers = medias)$cluster)/n
+      }
       
       Q = function(param){
         alphast = param[(1):(g)]
         betast = param[(g + 1):(2*g)]
         
-        Qj = function(j){
-          aux = 0
-          for(i in 1:n){
-            aux = aux + Wij[i,j] * (log(pi[j]) + log(dweibull(data[i], alphast[j],
-                                                        betast[j])))
-            if(aux == -Inf) return(aux = -.Machine$double.xmax/1e+08)
-            if(aux == Inf) return(aux = .Machine$double.xmax/1e+08)
-          }
-          return(aux)
+        
+        aux = 0
+        for(i in 1:n){
+          aux2 = Wij[i,j] * dweibull_mix(data[i], pi, alphast, betast, 
+                                         log = TRUE)
+          if(is.nan(aux2)){next}
+          if(aux2 == Inf){aux = Inf; break
+          }else{
+            if(aux2 == -Inf){aux = -Inf; break}
+            else{
+              aux = aux + aux2}}
         }
-        q = sum(sapply(1:g, Qj))
-        if(q == -Inf) return(.Machine$double.xmax/1e+08)
-        if(q == Inf) return(-.Machine$double.xmax/1e+08)
-        return(-q)
+        
+        if(aux == -Inf) return(.Machine$double.xmax/1e+100)
+        if(aux == Inf) return(-.Machine$double.xmax/1e+100)
+        return(-aux)
       }
       grQ = function(param){
         alphast = param[(1):(g)]
@@ -88,10 +94,19 @@ eweibull_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
         gr = c(gr1, gr2)
         return(-gr)
       }
-      
-      estim = optim(par = c(alphas, betas), fn = Q, method = "L-BFGS-B",
-                    lower = rep(1e-04, 2 * g),
-                    upper = rep(Inf, 2 * g), gr = grQ)
+      estim = NULL
+      while(is.null(estim)){
+        estim = tryCatch(optim(par = c(alphas, betas), fn = Q, 
+                               method = "L-BFGS-B", lower = rep(1e-01, 2 * g),
+                               upper = rep(Inf, 2 * g), gr = grQ),
+                         error = function(e){NULL})
+        
+        if(is.null(estim)){
+          alphas = alphas + 0.1
+          betas = betas + 0.1
+          count = max(c(0, count - 1))
+        }
+      }
       alphas = estim$par[1:g]
       betas = estim$par[(g + 1):(2*g)]
       
@@ -145,7 +160,7 @@ eweibull_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
     
     
     modal = max(modal, hist(data, plot = FALSE, if(any(names(list(...)) == 
-                                         "breaks") == FALSE){
+                                                       "breaks") == FALSE){
       breaks = d.breaks}, ...)$density)
     hist(data, freq = F, border = "gray48",
          main = "Sampling distribution of X", xlab = "x",
