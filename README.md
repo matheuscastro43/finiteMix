@@ -102,11 +102,6 @@ pglindley_mix(q = c(10, 25, 50, 80), pi = c(0.3, 0.7), alpha = c(10, 17), beta =
 ```
 
 
-<style>
-.list-inline {list-style: none; margin:0; padding: 0}
-.list-inline>li {display: inline-block}
-.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
-</style>
 <ol class=list-inline><li>0.137599094879368</li><li>0.301738650388426</li><li>0.587909657671024</li><li>0.978694472766959</li></ol>
 
 
@@ -134,11 +129,6 @@ qglindley_mix(p = c(.25, .50, .75, .95), pi = c(0.3, 0.7), alpha = c(10, 17), be
 ```
 
 
-<style>
-.list-inline {list-style: none; margin:0; padding: 0}
-.list-inline>li {display: inline-block}
-.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
-</style>
 <ol class=list-inline><li>13.7886513837911</li><li>45.9643806449501</li><li>57.5156423436485</li><li>73.4206581987979</li></ol>
 
 
