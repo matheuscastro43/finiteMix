@@ -145,9 +145,10 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
         modal[i] = dgamma_mix(1, pi, alphas, betas)
       }
     }
-    modal = min(c(1, max(modal, hist(data, plot = FALSE, if(any(names(list(...)) == 
-                                                  "breaks") == FALSE){
-      breaks = d.breaks}, ...)$density)))
+    modal = min(c(1, max(modal, hist(data, plot = FALSE, 
+                                     if(any(names(list(...)) == 
+                                                  "breaks") == FALSE){breaks = 
+                                                    d.breaks}, ...)$density)))
     hist(data, freq = F, border = "gray48",
          main = "Sampling distribution of X", xlab = "x",
          ylab = "Density",
@@ -180,9 +181,18 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
     si = t(t(c((dgamma(data[i], alphas[-g], scale = betas[-g]) - 
                   dgamma(data[i], alphas[g], scale = betas[g]))/
                  dgamma_mix(data[i], pi, alphas, betas),
-               pi * (exp(-data[i]/betas) * (betas^(-alphas) * data[i]^(alphas - 1) *(log(data[i]) - log(betas)) * gamma(alphas) - betas^(-alphas) * data[i]^(alphas - 1) * gammal(alphas))/(gamma(alphas))^2)/
+               pi * (exp(-data[i]/betas) * (betas^(-alphas) * 
+                                              data[i]^(alphas - 1) * 
+                                              (log(data[i]) - log(betas)) * 
+                                              gamma(alphas) - betas^(-alphas) * 
+                                              data[i]^(alphas - 1) * 
+                                              gammal(alphas))/
+                       (gamma(alphas))^2)/
                  dgamma_mix(data[i], pi, alphas, betas),
-               pi * ((data[i]^(alphas - 1))/(gamma(alphas)) * ((-alphas) * betas^(-(alphas + 1)) * exp(-data[i]/betas) + betas^(-alphas) * exp(-data[i]/betas) * data[i]/betas^2))/
+               pi * ((data[i]^(alphas - 1))/(gamma(alphas)) * 
+                       ((-alphas) * betas^(-(alphas + 1)) * 
+                          exp(-data[i]/betas) + betas^(-alphas) * 
+                          exp(-data[i]/betas) * data[i]/betas^2))/
                  dgamma_mix(data[i], pi, alphas, betas))))
     rownames(si) = c(paste0("pi_", as.character(1:(g-1))), 
                      paste0("alpha_", as.character(1:(g))),
