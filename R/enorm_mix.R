@@ -104,18 +104,35 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       }
       p <- recordPlot()
     }
+    si = function(i){
+      si = t(t(c((dnorm(data[i], medias[-g], dps[-g]) - dnorm(data[i], medias[g], dps[g]))/
+                   dnorm_mix(data[i], pi, medias, dps),
+                 pi * ((data[i] - medias) * exp(-(data[i] - medias)^2/(2 * dps^2)) / 
+                         (sqrt(4 * acos(0)) * dps^3))/
+                   dnorm_mix(data[i], pi, medias, dps),
+                 pi * (exp(-(data[i] - medias)^2/(2 * dps^2)) * 
+                         ((data[i] - medias)^2/(dps^2) - 1) / (2 *sqrt(4*acos(0))*dps^3))/
+                   dnorm_mix(data[i], pi, medias, dps))))
+      rownames(si) = c(paste0("pi_", as.character(1:(g-1))), 
+                       paste0("mu_", as.character(1:(g))), 
+                       paste0("sigma2_", as.character(1:(g))))
+      si %*% t(si)
+    }
+    se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
     ordem = order(medias)
     class = kmeans(data, centers = medias[ordem])$cluster
     if(plot.it){
-      output = list(class, pi[ordem], medias[ordem], dps[ordem], LF_new, aic, 
-                    bic, count, p)
+      output = list(class, pi[ordem], medias[ordem], dps[ordem], se, LF_new, 
+                    aic, bic, count, p)
       names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat",
-                        "logLik", "AIC", "BIC", "EM-iterations", "plot")}
+                        "stde","logLik", "AIC", "BIC", 
+                        "EM_iterations", "plot")}
     else{
-      output = list(class, pi[ordem], medias[ordem], dps[ordem], LF_new, aic, 
-                    bic, count)
+      output = list(class, pi[ordem], medias[ordem], dps[ordem], se, LF_new, 
+                    aic, bic, count)
       names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat",
-                        "logLik", "AIC", "BIC", "EM-iterations")
+                        "stde", "logLik", "AIC", "BIC", 
+                        "EM_iterations")
     }
     return(output)
   }
