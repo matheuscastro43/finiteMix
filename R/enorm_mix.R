@@ -105,6 +105,7 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       p <- recordPlot()
     }
     si = function(i){
+      ordem = order(medias)
       si = t(t(c((dnorm(data[i], medias[-g], dps[-g]) - dnorm(data[i], medias[g], dps[g]))/
                    dnorm_mix(data[i], pi, medias, dps),
                  pi * ((data[i] - medias) * exp(-(data[i] - medias)^2/(2 * dps^2)) / 
@@ -119,7 +120,6 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       si %*% t(si)
     }
     se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
-    ordem = order(medias)
     class = kmeans(data, centers = medias[ordem])$cluster
     if(plot.it){
       output = list(class, pi[ordem], medias[ordem], dps[ordem], se, LF_new, 
