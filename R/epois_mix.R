@@ -102,16 +102,29 @@ epois_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       }
       p <- recordPlot()
     }
-    ordem = order(medias)
-    class = kmeans(data, centers = lambda[ordem])$cluster
+    ordem = order(lambda)
+    medias = medias[ordem]
+    pi = pi[ordem]
+    lambda = lambda[ordem]
+    si = function(i){
+      si = t(t(c((dpois(data[i], lambda[-g]) - dpois(data[i], lambda[g]))/
+                   dpois_mix(data[i], pi, lambda),
+                 pi * ((exp(-lambda) * lambda^(data[i] - 1) * (data[i] - lambda))/(factorial(data[i])))/
+                   dpois_mix(data[i], pi, lambda))))
+      rownames(si) = c(paste0("pi_", as.character(1:(g-1))),
+                       paste0("lambda_", as.character(1:g)))
+      si %*% t(si)
+    }
+    se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
+    class = kmeans(data, centers = lambda)$cluster
     if(plot.it){
-      saida = list(class, pi[ordem], lambda[ordem], LF_new, aic, bic, count, p)
+      saida = list(class, pi, lambda, se, LF_new, aic, bic, count, p)
       names(saida) = c("classification" ,"pi_hat", "lambda_hat", 
-                       "logLik", "AIC", "BIC", "EM-iterations", "plot")
+                       "stde", "logLik", "AIC", "BIC", "EM_iterations", "plot")
     }else{
-      saida = list(class, pi[ordem], lambda[ordem], LF_new, aic, bic, count)
+      saida = list(class, pi, lambda, se, LF_new, aic, bic, count)
       names(saida) = c("classification" ,"pi_hat", "lambda_hat",
-                       "logLik", "AIC", "BIC", "EM-iterations")
+                       "stde", "logLik", "AIC", "BIC", "EM_iterations")
     }
     return(saida)
   }
