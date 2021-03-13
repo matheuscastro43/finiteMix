@@ -1,6 +1,6 @@
-eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it = 
-                           TRUE, empirical = FALSE, col.estimated = "orange", 
-                         col.empirical = "navy", ...){
+eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", 
+                         epsilon = 1e-05, plot.it = TRUE, empirical = FALSE, 
+                         col.estimated = "orange", col.empirical = "navy", ...){
   if((is.numeric(data) || is.numeric(data$sample)) && g == floor(g) && g > 1 &&
      is.logical(plot.it) && is.logical(empirical) &&
      (criteria == "dif.lh" || criteria == "dif.psi")){
@@ -105,7 +105,7 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       LF_new = sum(sapply(1:n, L))
       if(criteria == "dif.lh"){
         crit = LF_new - LF
-        if((abs(crit) < 1*10^(-5))){cat("\n"); break}
+        if((abs(crit) < epsilon)){cat("\n"); break}
         LF <- LF_new
       }
       else{
@@ -120,7 +120,7 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
           psi <- matrix(c(pi, alphas, betas, gammas), 4, byrow = T)
           next
         }
-        if(crit < 1*10^(-5)) {cat("\n"); break}
+        if(crit < epsilon) {cat("\n"); break}
         psi = psi_new
       }
       count = count + 1
@@ -222,17 +222,17 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
                      paste0("gamma_", as.character(1:(g))))
     si %*% t(si)
   }
-  se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
+  #se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
   class = kmeans(data, centers = medias)$cluster
   if(plot.it){
-    output = list(class, pi, alphas, betas, gammas, se, LF_new, aic, bic, count, p)
+    output = list(class, pi, alphas, betas, gammas, LF_new, aic, bic, count, p)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat", 
-                      "gamma_hat", "stde", "logLik", "AIC", "BIC", 
+                      "gamma_hat", "logLik", "AIC", "BIC", 
                       "EM_iterations", "plot")}
   else{
-    output = list(class, pi, alphas, betas, gammas, se, LF_new, aic, bic, count)
+    output = list(class, pi, alphas, betas, gammas, LF_new, aic, bic, count)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat",
-                      "gamma_hat", "stde", "logLik", "AIC", "BIC", 
+                      "gamma_hat", "logLik", "AIC", "BIC", 
                       "EM_iterations")
   }
   return(output)

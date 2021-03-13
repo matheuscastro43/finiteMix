@@ -7,8 +7,8 @@
 \description{ Estimates parameters of a univariate Lindley Mixture with k-means clustering and EM-algorithm.}
 
 \usage{
-elindley_mix(data, g, lim.em = 100, criteria = "dif.psi", plot.it = TRUE,   
-             empirical = FALSE, col.estimated = "orange", 
+elindley_mix(data, g, lim.em = 100, criteria = "dif.psi", epsilon = 1e-05, 
+             plot.it = TRUE, empirical = FALSE, col.estimated = "orange", 
              col.empirical = "navy", ...)
 }
 
@@ -18,6 +18,7 @@ elindley_mix(data, g, lim.em = 100, criteria = "dif.psi", plot.it = TRUE,
 \item{lim.em}{ limit of EM Iterations.}
 \item{criteria}{ the stop criteria to be used, could be "dif.psi" to calculate differences on
 parameters matrix or "dif.lh" to calculate differences on Likelihood function.}
+\item{epsilon}{ minimal difference value to algorithm stops.}
 \item{plot.it}{ logical, TRUE to plot the histogram with estimated distribution curve.}
 \item{empirical}{ logical, TRUE to add the empirical curve ("Kernel Density Estimation") in the plot.}
 \item{col.estimated}{ a colour to be used in the curve of estimated density.}

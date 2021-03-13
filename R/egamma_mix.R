@@ -1,6 +1,6 @@
-egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it = 
-                        TRUE, empirical = FALSE, col.estimated = "orange", 
-                      col.empirical = "navy", ...){
+egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", 
+                      epsilon = 1e-05, plot.it = TRUE, empirical = FALSE, 
+                      col.estimated = "orange", col.empirical = "navy", ...){
   if((is.numeric(data) || is.numeric(data$sample)) && g == floor(g) && g > 1 &&
      is.logical(plot.it) && is.logical(empirical) &&
      (criteria == "dif.lh" || criteria == "dif.psi")){
@@ -96,7 +96,7 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       LF_new = sum(sapply(1:n, L))
       if(criteria == "dif.lh"){
         crit = LF_new - LF
-        if((abs(crit) < 1*10^(-5))){cat("\n"); break}
+        if((abs(crit) < epsilon)){cat("\n"); break}
         LF <- LF_new
       }
       else{
@@ -110,7 +110,7 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
           psi <- matrix(c(pi, alphas, betas), 3, byrow = T)
           next
         }
-        if(crit < 1*10^(-5)) {cat("\n"); break}
+        if(crit < epsilon) {cat("\n"); break}
         psi = psi_new
       }
       count = count + 1
