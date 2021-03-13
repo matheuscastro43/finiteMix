@@ -48,7 +48,6 @@ elindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
       }
       Wj <- colSums(Wij)
       pi <- 1/n * Wj
-      pi = pi/sum(pi)
       
       Q = function(param){
         betast = param
@@ -129,9 +128,10 @@ elindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
         modal[i] = dlindley_mix(1, pi, betas)
       }
     }
-    modal = min(c(1, max(modal, hist(data, plot = FALSE, if(any(names(list(...)) == 
-                                                  "breaks") == FALSE){
-      breaks = d.breaks}, ...)$density)))
+    modal = min(c(1, max(modal, hist(data, plot = FALSE, 
+                                     if(any(names(list(...)) == 
+                                            "breaks") == FALSE){
+                                       breaks = d.breaks}, ...)$density)))
     hist(data, freq = F, border = "gray48",
          main = "Sampling distribution of X", xlab = "x",
          ylab = "Density",
@@ -155,15 +155,30 @@ elindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
   }
   medias = (betas * (1 + 2*betas))/(1 + betas)
   ordem = order(medias)
-  class = kmeans(data, centers = medias[ordem])$cluster
+  medias = medias[ordem]
+  pi = pi[ordem]
+  betas = betas[ordem]
+  si = function(i){
+    si = t(t(c((dlindley(data[i], betas[-g]) - dlindley(data[i], betas[g]))/
+                 dlindley_mix(data[i], pi, betas),
+               pi * (((data[i] + 1) * exp(-data[i]/betas) * 
+                        (data[i]/betas * (betas + 1) - (2*betas + 1)))/
+                       (betas^2 * (betas + 1)^2))/
+                 dlindley_mix(data[i], pi, betas))))
+    rownames(si) = c(paste0("pi_", as.character(1:(g-1))),
+                     paste0("beta_", as.character(1:(g))))
+    si %*% t(si)
+  }
+  se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
+  class = kmeans(data, centers = medias)$cluster
   if(plot.it){
-    output = list(class, pi[ordem], betas[ordem], LF_new, aic, bic, count, p)
+    output = list(class, pi, betas, se, LF_new, aic, bic, count, p)
     names(output) = c("classification", "pi_hat", "beta_hat", 
-                       "logLik", "AIC", "BIC", "EM-iterations", "plot")}
+                      "stde", "logLik", "AIC", "BIC", "EM_iterations", "plot")}
   else{
-    output = list(class, pi[ordem], betas[ordem], LF_new, aic, bic, count)
+    output = list(class, pi, betas, se, LF_new, aic, bic, count)
     names(output) = c("classification", "pi_hat", "beta_hat", 
-                      "logLik", "AIC", "BIC", "EM-iterations")
+                      "stde", "logLik", "AIC", "BIC", "EM_iterations")
   }
   return(output)
 }
