@@ -86,16 +86,29 @@ eexp_mix <- function(data, g, lim.em = 100, criteria = "dif.psi",
       }
       p <- recordPlot()
     }
-    ordem = order(rate, decreasing = T)
+    ordem = order(rate, decreasing = TRUE)
+    si = function(i){
+      si = t(t(c( (dexp(data[i], rate[-g]) - dexp(data[i], rate[g]))/
+                    dexp_mix(data[i], pi, rate),
+                  
+                  pi * (exp(-rate * data[i]) * (1 - data[i]))/
+                    dexp_mix(data[i], pi, rate))))
+      rownames(si) = c(paste0("pi_", as.character(1:(g-1))), 
+                       paste0("lambda_", as.character(1:(g))))
+      si %*% t(si)
+    }
+    se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
     class = kmeans(data, centers = 1/as.numeric(rate[ordem]))$cluster
     if(plot.it){
-      saida = list(class, pi[ordem], as.numeric(rate[ordem]), LF_new, aic, bic, count, p)
+      saida = list(class, pi[ordem], as.numeric(rate[ordem]), se, LF_new, aic,
+                   bic, count, p)
       names(saida) = c("classification", "pi_hat", "lambda_hat",
-                       "logLik", "AIC", "BIC", "EM-iterations", "plot")
+                       "stde", "logLik", "AIC", "BIC", "EM_iterations", "plot")
     }else{
-      saida = list(class, pi[ordem], as.numeric(rate[ordem]), LF_new, aic, bic, count)
+      saida = list(class, pi[ordem], as.numeric(rate[ordem]), se, LF_new, aic,
+                   bic, count)
       names(saida) = c("classification", "pi_hat", "lambda_hat", 
-                       "logLik", "AIC", "BIC", "EM-iterations")
+                       "stde", "logLik", "AIC", "BIC", "EM_iterations")
     }
     return(saida)
   }
