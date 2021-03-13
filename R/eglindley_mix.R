@@ -181,17 +181,59 @@ eglindley_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
   }
   medias = alphas * betas + (betas^2 * gammas)/(1 + betas * gammas)
   ordem = order(medias)
-  class = kmeans(data, centers = medias[ordem])$cluster
+  medias = medias[ordem]
+  pi = pi[ordem]
+  alphas = alphas[ordem]
+  betas = betas[ordem]
+  gammas = gammas[ordem]
+  gammal = function(x) {digamma(x) * gamma(x)}
+  si = function(i){
+    si = t(t(c((dglindley(data[i], alphas[-g], betas[-g], gammas[-g]) - 
+                  dglindley(data[i], alphas[g], betas[g], gammas[g]))/
+                 dglindley_mix(data[i], pi, alphas, betas, gammas),
+               pi * ((exp(-data[i]/betas)/(betas * gammas + 1)) * 
+                       (((data[i]^(alphas - 1) * log(data[i]) * 
+                            (alphas + gammas * 
+                               data[i]) + data[i]^(alphas - 1)) * 
+                           betas^(alphas) * gamma(alphas + 1) - 
+                           data[i]^(alphas - 1) * (alphas + gammas * data[i]) * 
+                           (betas^alphas * log(betas) * gamma(alphas + 1) + 
+                              betas^alphas * gammal(alphas + 1)))/
+                          (betas^alphas * gamma(alphas + 1))^2))/
+                 dglindley_mix(data[i], pi, alphas, betas, gammas),
+               pi * ((data[i]^(alphas - 1) * (alphas + gammas * data[i]))/
+                       (gamma(alphas + 1)) * (exp(-data[i]/betas) * 
+                                                (data[i]/betas^2) * 
+                                                betas^alphas * 
+                                                (betas * gammas + 1) - 
+                                                exp(-data[i]/betas) * 
+                                                (gammas*(alphas + 1) * 
+                                                   betas^(alphas) + alphas * 
+                                                   betas^(alphas - 1)))/
+                       (betas^alphas * (betas * gammas + 1))^2)/
+                 dglindley_mix(data[i], pi, alphas, betas, gammas),
+               pi * ((data[i]^(alphas - 1) * exp(-data[i]/betas))/
+                       (betas^alphas * gamma(alphas + 1)) * 
+                       (data[i] - alphas * betas)/(betas * gammas + 1)^2)/
+                 dglindley_mix(data[i], pi, alphas, betas, gammas))))
+    rownames(si) = c(paste0("pi_", as.character(1:(g-1))),
+                     paste0("alpha_", as.character(1:(g))),
+                     paste0("beta_", as.character(1:(g))),
+                     paste0("gamma_", as.character(1:(g))))
+    si %*% t(si)
+  }
+  se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
+  class = kmeans(data, centers = medias)$cluster
   if(plot.it){
-    output = list(class, pi[ordem], alphas[ordem], betas[ordem], gammas[ordem],
-                  LF_new, aic, bic, count, p)
+    output = list(class, pi, alphas, betas, gammas, se, LF_new, aic, bic, count, p)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat", 
-                      "gamma_hat", "logLik", "AIC", "BIC", "EM-iterations", "plot")}
+                      "gamma_hat", "stde", "logLik", "AIC", "BIC", 
+                      "EM_iterations", "plot")}
   else{
-    output = list(class, pi[ordem], alphas[ordem], betas[ordem], gammas[ordem],
-                  LF_new, aic, bic, count)
+    output = list(class, pi, alphas, betas, gammas, se, LF_new, aic, bic, count)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat",
-                      "gamma_hat", "logLik", "AIC", "BIC", "EM-iterations")
+                      "gamma_hat", "stde", "logLik", "AIC", "BIC", 
+                      "EM_iterations")
   }
   return(output)
 }
