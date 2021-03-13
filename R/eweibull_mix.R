@@ -185,17 +185,46 @@ eweibull_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
   }
   medias = betas * gamma(1 + 1/alphas)
   ordem = order(medias)
-  class = kmeans(data, centers = medias[ordem])$cluster
+  medias = medias[ordem]
+  pi = pi[ordem]
+  alphas = alphas[ordem]
+  betas = betas[ordem]
+  si = function(i){
+    si = t(t(c((dweibull(data[i], alphas[-g], betas[-g]) - 
+                  dweibull(data[i], alphas[g], betas[g]))/
+                 dweibull_mix(data[i], pi, alphas, betas),
+               pi * ((1/betas * (data[i]/betas)^(alphas - 1) + alphas/betas *
+                        (data[i]/betas)^(alphas - 1) * log(data[i]/betas)) * 
+                       exp(-(data[i]/betas)^alphas) - alphas/betas * 
+                       (data[i]/betas)^(alphas - 1) * 
+                       exp(-(data[i]/betas)^(alphas)) * 
+                       (data[i]/betas)^alphas * log(data[i]/betas))/
+                 dweibull_mix(data[i], pi, alphas, betas),
+               pi * ((alphas/betas * data[i]^(alphas - 1) * (1 - alphas) * 
+                        betas^(-alphas) - alphas/betas^2 * 
+                        (data[i]/betas)^(alphas - 1)) * 
+                       exp(-(data[i]/betas)^(alphas)) + alphas/betas * 
+                       (data[i]/betas)^(alphas - 1) * 
+                       exp(-(data[i]/betas)^(alphas)) * alphas * 
+                       data[i]^(alphas) * betas^(-(alphas + 1)))/
+                 dweibull_mix(data[i], pi, alphas, betas))))
+    rownames(si) = c(paste0("pi_", as.character(1:(g-1))),
+                     paste0("alpha_", as.character(1:g)),
+                     paste0("beta_", as.character(1:g)))
+    si %*% t(si)
+  }
+  se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
+  class = kmeans(data, centers = medias)$cluster
   if(plot.it){
-    output = list(class, pi[ordem], alphas[ordem], betas[ordem], 
-                  LF_new, aic, bic, count, p)
+    output = list(class, pi, alphas, betas, 
+                  se, LF_new, aic, bic, count, p)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat", 
-                      "logLik", "AIC", "BIC", "EM-iterations", "plot")}
+                      "stde", "logLik", "AIC", "BIC", "EM_iterations", "plot")}
   else{
-    output = list(class, pi[ordem], alphas[ordem], betas[ordem],
-                  LF_new, aic, bic, count)
+    output = list(class, pi, alphas, betas,
+                  se, LF_new, aic, bic, count)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat",
-                      "logLik", "AIC", "BIC", "EM-iterations")
+                      "stde", "logLik", "AIC", "BIC", "EM_iterations")
   }
   return(output)
 }
