@@ -205,12 +205,12 @@ egamma_mix = function(data, g, lim.em = 100, criteria = "dif.psi", plot.it =
     output = list(class, pi, alphas, betas, se, LF_new, 
                   aic, bic, count, p)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat", 
-                      "stde", "logLik", "AIC", "BIC", "EM-iterations", "plot")}
+                      "stde", "logLik", "AIC", "BIC", "EM_iterations", "plot")}
   else{
     output = list(class, pi, alphas, betas, se, LF_new, 
                   aic, bic, count)
     names(output) = c("classification", "pi_hat", "alpha_hat", "beta_hat",
-                      "stde", "logLik", "AIC", "BIC", "EM-iterations")
+                      "stde", "logLik", "AIC", "BIC", "EM_iterations")
   }
   return(output)
 }
