@@ -87,6 +87,8 @@ eexp_mix <- function(data, g, lim.em = 100, criteria = "dif.psi",
       p <- recordPlot()
     }
     ordem = order(rate, decreasing = TRUE)
+    pi = pi[ordem]
+    rate = rate[ordem]
     si = function(i){
       si = t(t(c( (dexp(data[i], rate[-g]) - dexp(data[i], rate[g]))/
                     dexp_mix(data[i], pi, rate),
@@ -98,14 +100,14 @@ eexp_mix <- function(data, g, lim.em = 100, criteria = "dif.psi",
       si %*% t(si)
     }
     se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
-    class = kmeans(data, centers = 1/as.numeric(rate[ordem]))$cluster
+    class = kmeans(data, centers = 1/as.numeric(rate))$cluster
     if(plot.it){
-      saida = list(class, pi[ordem], as.numeric(rate[ordem]), se, LF_new, aic,
+      saida = list(class, pi, as.numeric(rate), se, LF_new, aic,
                    bic, count, p)
       names(saida) = c("classification", "pi_hat", "lambda_hat",
                        "stde", "logLik", "AIC", "BIC", "EM_iterations", "plot")
     }else{
-      saida = list(class, pi[ordem], as.numeric(rate[ordem]), se, LF_new, aic,
+      saida = list(class, pi, as.numeric(rate), se, LF_new, aic,
                    bic, count)
       names(saida) = c("classification", "pi_hat", "lambda_hat", 
                        "stde", "logLik", "AIC", "BIC", "EM_iterations")
