@@ -10,7 +10,7 @@ Search for the best number of components with non-parametric and parametric crit
 
 \usage{
 g.search(data, g = NULL, family = NULL, lim.em = 40, plot.it = TRUE, 
-         col.wss = "navy", col.ic = c("red", "orange"), ...)}
+         col.wss = "navy", col.ic = c("orange", "red"), ...)}
 
 \arguments{
   \item{data}{ vector or list containing the sample.}
