@@ -106,13 +106,19 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
     }
     si = function(i){
       ordem = order(medias)
-      si = t(t(c((dnorm(data[i], medias[-g], dps[-g]) - dnorm(data[i], medias[g], dps[g]))/
+      pi = pi[ordem]
+      medias = medias[ordem]
+      dps = dps[ordem]
+      si = t(t(c((dnorm(data[i], medias[-g], dps[-g]) - 
+                    dnorm(data[i],medias[g], dps[g]))/
                    dnorm_mix(data[i], pi, medias, dps),
-                 pi * ((data[i] - medias) * exp(-(data[i] - medias)^2/(2 * dps^2)) / 
+                 pi * ((data[i] - medias) * 
+                         exp(-(data[i] - medias)^2/(2 * dps^2)) / 
                          (sqrt(4 * acos(0)) * dps^3))/
                    dnorm_mix(data[i], pi, medias, dps),
                  pi * (exp(-(data[i] - medias)^2/(2 * dps^2)) * 
-                         ((data[i] - medias)^2/(dps^2) - 1) / (2 *sqrt(4*acos(0))*dps^3))/
+                         ((data[i] - medias)^2/(dps^2) - 1) / 
+                         (2 *sqrt(4*acos(0))*dps^3))/
                    dnorm_mix(data[i], pi, medias, dps))))
       rownames(si) = c(paste0("pi_", as.character(1:(g-1))), 
                        paste0("mu_", as.character(1:(g))), 
@@ -120,15 +126,15 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
       si %*% t(si)
     }
     se = sqrt(diag(solve(Reduce('+', sapply(1:n, si, simplify = FALSE)))))
-    class = kmeans(data, centers = medias[ordem])$cluster
+    class = kmeans(data, centers = medias)$cluster
     if(plot.it){
-      output = list(class, pi[ordem], medias[ordem], dps[ordem], se, LF_new, 
+      output = list(class, pi, medias, dps, se, LF_new, 
                     aic, bic, count, p)
       names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat",
                         "stde","logLik", "AIC", "BIC", 
                         "EM_iterations", "plot")}
     else{
-      output = list(class, pi[ordem], medias[ordem], dps[ordem], se, LF_new, 
+      output = list(class, pi, medias, dps, se, LF_new, 
                     aic, bic, count)
       names(output) = c("classification", "pi_hat", "mu_hat", "sigma_hat",
                         "stde", "logLik", "AIC", "BIC", 
