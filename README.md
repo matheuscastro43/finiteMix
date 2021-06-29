@@ -8,8 +8,9 @@ First of all, you need the devtools package to install any package from GitHub, 
 
 
 ```R
-if(!suppressMessages(require(devtools))){
-    install.packages(devtools); require(devtools)}
+if(!"devtools" %in% installed.packages())
+    install.packages(devtools)
+require(devtools)
 ```
 
 Now, we just need to install finiteMix :)

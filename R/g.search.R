@@ -135,9 +135,9 @@ g.search <- function(data, g = NULL, family = NULL, lim.em = 40, plot.it = TRUE,
     if(!is.null(family)){
       lines(x = g, aicp, col = col.ic[2], lwd = 5, type = "o")
       lines(x = g, bicp, col = col.ic[1], lwd = 3, type = "o")
-      legend("topright", legend=(c("WSS", "AIC/BIC")), 
-             fill=c(col.wss, col.ic[1]), 
-             border = c(col.wss, col.ic[2]), bty="n")
+      legend("topright", legend=(c("WSS", "AIC", "BIC")), 
+             fill=c(col.wss, col.ic), 
+             border = c(col.wss, col.ic), bty="n")
     }
     else{
       legend("topright", legend="WSS", fill= col.wss, border = col.wss, bty="n")
