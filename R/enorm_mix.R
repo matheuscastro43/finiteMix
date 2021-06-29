@@ -75,7 +75,7 @@ enorm_mix = function(data, g, lim.em = 100, criteria = "dif.psi",
         break
       }
     }
-    p = prod(dim(matrix(0, 2, 2))) - 1
+    p = 3*g - 1
     aic = 2*p - 2*LF_new
     bic = p*log(n) - 2*LF_new
     if(plot.it){
